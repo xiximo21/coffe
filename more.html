@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Brew Haven — 咖啡的起点，心灵的栖息地</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --beige: #f9f5f0;
+      --off-white: #fdfcf9;
+      --brown: #5c4b43;
+      --light-brown: #a6917d;
+      --green: #6b8e6b;
+      --white: #ffffff;
+      --shadow-light: rgba(92, 75, 67, 0.06);
+      --shadow-medium: rgba(92, 75, 67, 0.1);
+      --transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--brown);
+      background-color: var(--beige);
+      line-height: 1.7;
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3 {
+      font-family: 'Noto Serif SC', serif;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* Header */
+    header {
+      background-color: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(8px);
+      padding: 1.2rem 0;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 1px 10px var(--shadow-light);
+    }
+
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 1.9rem;
+      color: var(--brown);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 1.8rem;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: var(--brown);
+      font-weight: 500;
+      font-size: 1.02rem;
+      position: relative;
+      transition: var(--transition);
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--green);
+      transition: var(--transition);
+    }
+
+    nav a:hover {
+      color: var(--green);
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    /* Hero Section */
+    .hero {
+      height: 85vh;
+      min-height: 600px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: url('https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+      color: var(--white);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: linear-gradient(to bottom, rgba(92, 75, 67, 0.7), rgba(92, 75, 67, 0.5));
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 750px;
+      padding: 0 1.5rem;
+    }
+
+    .hero h1 {
+      font-size: 3.2rem;
+      margin-bottom: 1.2rem;
+      line-height: 1.2;
+      text-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+
+    .hero p {
+      font-size: 1.25rem;
+      margin-bottom: 2.2rem;
+      opacity: 0.95;
+    }
+
+    .btn {
+      display: inline-block;
+      background: var(--beige);
+      color: var(--brown);
+      padding: 0.9rem 2.4rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1.05rem;
+      transition: var(--transition);
+      box-shadow: 0 4px 15px var(--shadow-medium);
+    }
+
+    .btn:hover {
+      background: var(--green);
+      color: var(--white);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(107, 142, 107, 0.3);
+    }
+
+    /* Section Styling */
+    section {
+      padding: 6rem 0;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 3.5rem;
+      font-size: 2.4rem;
+      color: var(--brown);
+      position: relative;
+    }
+
+    .section-title::after {
+      content: '';
+      display: block;
+      width: 60px;
+      height: 3px;
+      background: var(--green);
+      margin: 1rem auto 0;
+      border-radius: 2px;
+    }
+
+    /* About */
+    .about-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3.5rem;
+      align-items: center;
+    }
+
+    .quote {
+      font-style: italic;
+      color: var(--green);
+      margin: 1.8rem 0;
+      padding-left: 1.2rem;
+      border-left: 3px solid var(--green);
+      font-size: 1.1rem;
+      line-height: 1.6;
+    }
+
+    .about-content img {
+      border-radius: 16px;
+      box-shadow: 0 10px 30px var(--shadow-medium);
+      transition: var(--transition);
+    }
+
+    .about-content img:hover {
+      transform: scale(1.02);
+    }
+
+    /* Grid Sections */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2.8rem;
+    }
+
+    .card {
+      background: var(--off-white);
+      padding: 2.2rem;
+      border-radius: 16px;
+      box-shadow: 0 6px 20px var(--shadow-light);
+      transition: var(--transition);
+      border: 1px solid rgba(166, 145, 125, 0.1);
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 30px var(--shadow-medium);
+    }
+
+    .card h3 {
+      margin-bottom: 1.1rem;
+      color: var(--brown);
+      font-size: 1.4rem;
+    }
+
+    .card p {
+      color: #6b5e57;
+      font-size: 1.02rem;
+    }
+
+    /* Team & Values */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3.5rem;
+      margin-top: 2.5rem;
+    }
+
+    .two-col h3 {
+      margin-bottom: 1.2rem;
+      font-size: 1.5rem;
+    }
+
+    .two-col ul {
+      padding-left: 1.6rem;
+    }
+
+    .two-col li {
+      margin-bottom: 0.8rem;
+      line-height: 1.6;
+    }
+
+    .values-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 2rem;
+      box-shadow: 0 4px 15px var(--shadow-light);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .values-table th,
+    .values-table td {
+      padding: 1.2rem 1.5rem;
+      text-align: left;
+      border-bottom: 1px solid rgba(166, 145, 125, 0.15);
+    }
+
+    .values-table th {
+      background-color: rgba(107, 142, 107, 0.06);
+      font-weight: 600;
+      color: var(--brown);
+    }
+
+    .values-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    /* Testimonials */
+    .testimonials {
+      background-color: var(--off-white);
+      position: relative;
+    }
+
+    .testimonial {
+      text-align: center;
+      padding: 2rem;
+      font-style: italic;
+      font-size: 1.1rem;
+      line-height: 1.7;
+      color: var(--brown);
+    }
+
+    .author {
+      font-weight: 500;
+      color: var(--green);
+      margin-top: 0.8rem;
+      display: block;
+      font-size: 1.05rem;
+    }
+
+    /* Contact */
+    .contact-info {
+      text-align: center;
+      font-size: 1.15rem;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .contact-info div {
+      margin: 1rem 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+    }
+
+    .contact-buttons {
+      margin-top: 2rem;
+    }
+
+    .contact-buttons .btn {
+      margin: 0 0.6rem;
+    }
+
+    footer {
+      background: var(--brown);
+      color: var(--beige);
+      text-align: center;
+      padding: 2.5rem 0 2rem;
+      font-size: 1rem;
+      line-height: 1.7;
+    }
+
+    footer p:first-child {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      font-family: 'Noto Serif SC', serif;
+      font-weight: 400;
+      opacity: 0.9;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .hero h1 {
+        font-size: 2.6rem;
+      }
+      .about-content,
+      .two-col {
+        grid-template-columns: 1fr;
+      }
+      .two-col {
+        gap: 2.5rem;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .hero {
+        height: auto;
+        padding: 8rem 0 5rem;
+      }
+      .hero h1 {
+        font-size: 2.2rem;
+      }
+      .hero p {
+        font-size: 1.1rem;
+      }
+      nav ul {
+        gap: 1.2rem;
+        font-size: 0.95rem;
+      }
+      .btn {
+        padding: 0.8rem 2rem;
+        font-size: 1rem;
+      }
+      .section-title {
+        font-size: 2rem;
+      }
+    }
+    /* 返回首页按钮 - 左上角 */
+    .back-to-home-top-left {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 0.4rem 0.8rem;
+      background-color: var(--white);
+      color: var(--brown);
+      text-decoration: none;
+      border: 1px solid var(--light-brown);
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+      transition: var(--transition);
+      z-index: 1001;
+    }
+
+    .back-to-home-top-left:hover {
+      background-color: var(--off-white);
+      border-color: var(--brown);
+      transform: translateY(-2px);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+<!-- 返回首页按钮 - 左上角 -->
+<a href="index.html" class="back-to-home-top-left">
+  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M15 19l-7-7 7-7"></path>
+  </svg>
+  首页
+</a>
+<!-- Header -->
+<header>
+  <div class="container header-content">
+    <a href="#" class="logo">Brew Haven</a>
+    <nav>
+      <ul>
+        <li><a href="#about">我们是谁</a></li>
+        <li><a href="#space">格子环境</a></li>
+        <li><a href="#coffee">咖啡故事</a></li>
+        <li><a href="#team">专业团队</a></li>
+        <li><a href="#contact">联系我们</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-content">
+    <h1>咖啡的起点，心灵的栖息地</h1>
+    <p>我们相信，每一杯咖啡都是一次安静的对话。</p>
+    <a href="more3.html" class="btn">探索我们的咖啡</a>
+  </div>
+</section>
+
+<!-- About -->
+<section id="about">
+  <div class="container">
+    <h2 class="section-title">我们是谁？</h2>
+    <div class="about-content">
+      <div>
+        <p>Brew Haven 创立于 2025 年，诞生于对咖啡纯粹之美的热爱。我们是一家专注于提供高品质精品咖啡的独立咖啡馆，致力于将世界各地最优质的咖啡豆，通过精湛的手工技艺，呈现给每一位追求生活质感的你。</p>
+        <div class="quote">“一杯好咖啡，始于优质豆，成于匠心艺。”</div>
+        <p>我们坚信，真正的咖啡体验不仅仅是味觉的享受，更是一种生活方式的表达。在这里，时间慢下来，人与人之间多了一份真诚的交流。</p>
+      </div>
+      <div>
+        <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=600&q=80" alt="手冲咖啡过程" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Space -->
+<section id="space" style="background-color: var(--off-white); padding: 4rem 0;">
+  <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 1.5rem;">
+    <h2 class="section-title" style="
+      text-align: center;
+      font-family: 'Noto Serif SC', serif;
+      font-weight: 600;
+      font-size: 2.2rem;
+      color: var(--brown);
+      margin-bottom: 3rem;
+      position: relative;
+    ">格子环境：不只是空间，更是氛围</h2>
+
+    <div class="grid" style="
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+    ">
+      <!-- 1. 开放式格架系统 -->
+      <div class="card" style="
+        background: white;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 6px 20px rgba(92, 75, 67, 0.08);
+        transition: transform 0.3s ease;
+      " onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='translateY(0)'">
+        <img src="images/bk5.jpg" alt="开放式格架系统" style="width:100%; height:200px; object-fit: cover;">
+        <div style="padding: 1.5rem;">
+          <h3 style="font-family: 'Noto Serif SC', serif; font-size: 1.3rem; color: var(--brown); margin-bottom: 0.8rem;">开放式格架系统</h3>
+          <p style="color: var(--light-brown); line-height: 1.6;">展示不同产地的咖啡豆，也陈列着客人寄来的手写卡片与旅行明信片。</p>
+        </div>
+      </div>
+
+      <!-- 2. 阅读角格区 -->
+      <div class="card" style="
+        background: white;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 6px 20px rgba(92, 75, 67, 0.08);
+        transition: transform 0.3s ease;
+      " onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='translateY(0)'">
+        <img src="images/bk4.jpg" alt="阅读角格区" style="width:100%; height:200px; object-fit: cover;">
+        <div style="padding: 1.5rem;">
+          <h3 style="font-family: 'Noto Serif SC', serif; font-size: 1.3rem; color: var(--brown); margin-bottom: 0.8rem;">阅读角格区</h3>
+          <p style="color: var(--light-brown); line-height: 1.6;">配备精选书籍和杂志，适合独自沉思或与朋友共读。</p>
+        </div>
+      </div>
+
+      <!-- 3. 共享工作格位 -->
+      <div class="card" style="
+        background: white;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 6px 20px rgba(92, 75, 67, 0.08);
+        transition: transform 0.3s ease;
+      " onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='translateY(0)'">
+        <img src="images/bk6.jpg" alt="共享工作格位" style="width:100%; height:200px; object-fit: cover;">
+        <div style="padding: 1.5rem;">
+          <h3 style="font-family: 'Noto Serif SC', serif; font-size: 1.3rem; color: var(--brown); margin-bottom: 0.8rem;">共享工作格位</h3>
+          <p style="color: var(--light-brown); line-height: 1.6;">为自由职业者打造安静、有灵感的工作空间。</p>
+        </div>
+      </div>
+
+      <!-- 4. 透明烘焙窗 -->
+      <div class="card" style="
+        background: white;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 6px 20px rgba(92, 75, 67, 0.08);
+        transition: transform 0.3s ease;
+      " onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='translateY(0)'">
+        <img src="images/bk7.jpg" alt="透明烘焙窗" style="width:100%; height:200px; object-fit: cover;">
+        <div style="padding: 1.5rem;">
+          <h3 style="font-family: 'Noto Serif SC', serif; font-size: 1.3rem; color: var(--brown); margin-bottom: 0.8rem;">透明烘焙窗</h3>
+          <p style="color: var(--light-brown); line-height: 1.6;">亲眼看到咖啡豆从生豆到香气四溢的全过程。</p>
+        </div>
+      </div>
+
+      <!-- 5. 手冲体验吧台（新增） -->
+      <div class="card" style="
+        background: white;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 6px 20px rgba(92, 75, 67, 0.08);
+        transition: transform 0.3s ease;
+      " onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='translateY(0)'">
+        <img src="images/bk8.jpg" alt="手冲体验吧台" style="width:100%; height:200px; object-fit: cover;">
+        <div style="padding: 1.5rem;">
+          <h3 style="font-family: 'Noto Serif SC', serif; font-size: 1.3rem; color: var(--brown); margin-bottom: 0.8rem;">手冲体验吧台</h3>
+          <p style="color: var(--light-brown); line-height: 1.6;">客人可亲手参与手冲咖啡制作，在咖啡师指导下感受风味层次。</p>
+        </div>
+      </div>
+
+      <!-- 6. 绿植休憩庭院（新增） -->
+      <div class="card" style="
+        background: white;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 6px 20px rgba(92, 75, 67, 0.08);
+        transition: transform 0.3s ease;
+      " onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='translateY(0)'">
+        <img src="images/bk9.jpg" alt="绿植休憩庭院" style="width:100%; height:200px; object-fit: cover;">
+        <div style="padding: 1.5rem;">
+          <h3 style="font-family: 'Noto Serif SC', serif; font-size: 1.3rem; color: var(--brown); margin-bottom: 0.8rem;">绿植休憩庭院</h3>
+          <p style="color: var(--light-brown); line-height: 1.6;">室外小庭院，被绿植环绕，适合午后晒太阳、轻声交谈或放空。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Coffee -->
+<section id="coffee" style="background-color: var(--beige); padding: 4rem 0;">
+  <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 1.5rem;">
+    <h2 class="section-title" style="
+      text-align: center;
+      font-family: 'Noto Serif SC', serif;
+      font-weight: 600;
+      font-size: 2.2rem;
+      color: var(--brown);
+      margin-bottom: 2.5rem;
+    ">咖啡的故事：从农场到杯中</h2>
+
+    <p style="text-align: center; color: var(--light-brown); max-width: 720px; margin: 0 auto 2.5rem; line-height: 1.7;">
+      在 Brew Haven，我们相信每一粒咖啡豆都承载着土地的气息、农人的汗水与季节的馈赠。
+      我们亲自走访产地，与小型合作社建立长期合作，确保从采摘、处理到运输的每一步，
+      都以尊重自然与风味为前提。这不仅是供应链，更是一段值得讲述的故事。
+    </p>
+
+    <div class="grid" style="
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      margin-bottom: 2.5rem;
+    ">
+      <!-- 哥伦比亚 Huila -->
+      <div class="card" style="
+        background: white;
+        border-radius: 16px;
+        padding: 1.8rem;
+        box-shadow: 0 4px 16px var(--shadow-light);
+      ">
+        <h3 style="font-family: 'Noto Serif SC', serif; font-size: 1.25rem; color: var(--brown); margin-bottom: 0.8rem;">哥伦比亚 · Huila</h3>
+        <p style="color: var(--light-brown); line-height: 1.6; margin-bottom: 0.6rem;">
+          海拔 1,800 米的安第斯山谷，昼夜温差大，孕育出糖分饱满的红波旁种。
+        </p>
+        <p style="color: var(--light-brown); line-height: 1.6;">
+          水洗处理，浅度烘焙后呈现明亮的柑橘酸质、茉莉花香与蜂蜜般的甜感尾韵。
+        </p>
+      </div>
+
+      <!-- 埃塞俄比亚 Yirgacheffe -->
+      <div class="card" style="
+        background: white;
+        border-radius: 16px;
+        padding: 1.8rem;
+        box-shadow: 0 4px 16px var(--shadow-light);
+      ">
+        <h3 style="font-family: 'Noto Serif SC', serif; font-size: 1.25rem; color: var(--brown); margin-bottom: 0.8rem;">埃塞俄比亚 · Yirgacheffe</h3>
+        <p style="color: var(--light-brown); line-height: 1.6; margin-bottom: 0.6rem;">
+          被誉为“咖啡故乡”的耶加雪菲，采用传统日晒法处理原生种咖啡。
+        </p>
+        <p style="color: var(--light-brown); line-height: 1.6;">
+          中浅烘焙释放出蓝莓、佛手柑与伯爵茶的复杂香气，酸质如红酒般丝滑优雅。
+        </p>
+      </div>
+
+      <!-- 肯尼亚 AA -->
+      <div class="card" style="
+        background: white;
+        border-radius: 16px;
+        padding: 1.8rem;
+        box-shadow: 0 4px 16px var(--shadow-light);
+      ">
+        <h3 style="font-family: 'Noto Serif SC', serif; font-size: 1.25rem; color: var(--brown); margin-bottom: 0.8rem;">肯尼亚 · AA 豆</h3>
+        <p style="color: var(--light-brown); line-height: 1.6; margin-bottom: 0.6rem;">
+          来自涅里（Nyeri）高海拔庄园，SL28 与 SL34 品种以高酸高甜著称。
+        </p>
+        <p style="color: var(--light-brown); line-height: 1.6;">
+          双重水洗发酵工艺带来浓郁的黑醋栗、番茄叶风味，尾韵干净且持久回甘。
+        </p>
+      </div>
+    </div>
+
+    <div style="text-align: center; margin-top: 2.5rem;">
+      <p style="color: var(--light-brown); font-size: 0.95rem; margin-bottom: 1.8rem;">
+        每周三次小批量烘焙 · 所有咖啡豆标注烘焙日期 · 提供浅/中/深烘选择
+      </p>
+      <div class="quote" style="
+        font-family: 'Noto Serif SC', serif;
+        font-style: italic;
+        font-size: 1.3rem;
+        color: var(--brown);
+        margin: 1.8rem auto;
+        max-width: 620px;
+        line-height: 1.6;
+      ">
+        “我们不追求统一标准，而是尊重每一种豆子的声音。”
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Team & Values -->
+<section id="team" style="background-color: var(--white);">
+  <div class="container">
+    <h2 class="section-title">专业团队 × 可持续发展</h2>
+    <div class="two-col">
+      <div>
+        <h3>用热爱守护品质</h3>
+        <ul>
+          <li>全体成员通过 SCA（精品咖啡协会）认证</li>
+          <li>定期参加国际赛事培训与品鉴课程</li>
+          <li>每月举办“咖啡沙龙”，邀请客人探索风味之旅</li>
+        </ul>
+      </div>
+      <div>
+        <h3>与地球共生</h3>
+        <ul>
+          <li>使用可降解包装材料</li>
+          <li>咖啡渣回收用于社区园艺项目</li>
+          <li>支持公平贸易，保障咖啡农合理报酬</li>
+          <li>与本地艺术家合作，推动可持续生活</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 style="text-align:center; margin:3.5rem 0 1.8rem;">为什么选择 Brew Haven？</h3>
+    <table class="values-table">
+      <tr><th>项目</th><th>Brew Haven 的承诺</th></tr>
+      <tr><td>原料</td><td>全球精选，直接采购</td></tr>
+      <tr><td>烘焙</td><td>小批量，每周新鲜</td></tr>
+      <tr><td>技术</td><td>国际认证团队，精准萃取</td></tr>
+      <tr><td>环境</td><td>温暖格调，舒适社交空间</td></tr>
+      <tr><td>价值观</td><td>可持续、透明、人文关怀</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- Testimonials -->
+<section class="testimonials">
+  <div class="container">
+    <h2 class="section-title">客户评价</h2>
+    <div class="grid">
+      <div class="testimonial">
+        “在这里喝过最好的手冲，连心情都被治愈了。”<br><span class="author">—— 李小姐，常客三年</span>
+      </div>
+      <div class="testimonial">
+        “我的灵感都在这个格子里诞生。”<br><span class="author">—— 张先生，自由撰稿人</span>
+      </div>
+      <div class="testimonial">
+        “第一次来就爱上了这杯咖啡的味道，还有那个微笑的咖啡师。”<br><span class="author">—— 小王，学生</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact -->
+<section id="contact" style="background-color: var(--beige);">
+  <div class="container">
+    <h2 class="section-title">联系我们</h2>
+    <div class="contact-info">
+      <div>📍 上海市徐汇区复兴西路128号</div>
+      <div>📞 +86 21 5555 8888</div>
+      <div>📧 hello@brewhaven.com</div>
+      <div>⏰ 营业时间：周一至周日 7:30 – 20:00</div>
+      <div class="contact-buttons">
+        <a href="menu.html" class="btn">查看菜单</a>
+        <a href="#" class="btn">加入会员</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <p>Brew Haven 不只是卖咖啡，我们在贩卖一种慢下来的时光，一种被认真对待的生活方式。</p>
+    <p>© 2025 Brew Haven. All rights reserved.</p>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>注册 - Brew Haven</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <style>
+    :root {
+      --brown: #5c4b43;
+      --dark-brown: #8b6c55;
+      --beige: #fdfcf9;
+      --light-brown: #a6917d;
+      --off-white: #f9f5f0;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--beige);
+      color: var(--brown);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .register-container {
+      background: white;
+      border-radius: 16px;
+      width: 100%;
+      max-width: 420px;
+      box-shadow: 0 10px 40px rgba(92, 75, 67, 0.12);
+      overflow: hidden;
+    }
+
+    .register-header {
+      background-color: var(--dark-brown);
+      color: white;
+      padding: 1.8rem 1.5rem;
+      text-align: center;
+    }
+
+    .register-header h1 {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 1.6rem;
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+    }
+
+    .register-header p {
+      font-size: 0.95rem;
+      opacity: 0.9;
+    }
+
+    .register-form {
+      padding: 1.8rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.4rem;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+      color: var(--brown);
+    }
+
+    .input-with-icon {
+      position: relative;
+    }
+
+    .input-with-icon i {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--light-brown);
+      font-size: 1rem;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 11px 14px 11px 42px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      transition: border-color 0.3s ease;
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: var(--dark-brown);
+    }
+
+    .terms {
+      font-size: 0.85rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .terms input {
+      margin-right: 8px;
+    }
+
+    .terms a {
+      color: var(--dark-brown);
+      text-decoration: underline;
+    }
+
+    .btn-register {
+      width: 100%;
+      background-color: var(--dark-brown);
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn-register:hover {
+      background-color: #7a5a44;
+    }
+
+    .login-link {
+      text-align: center;
+      margin-top: 1.4rem;
+      font-size: 0.9rem;
+      color: var(--brown);
+    }
+
+    .login-link a {
+      color: var(--dark-brown);
+      text-decoration: underline;
+      margin-left: 4px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="register-container">
+  <div class="register-header">
+    <h1>欢迎加入</h1>
+    <p>创建您的专属账号，开启咖啡旅程</p>
+  </div>
+
+  <form class="register-form" id="registerForm">
+    <!-- 姓名 -->
+    <div class="form-group">
+      <label for="name">姓名</label>
+      <div class="input-with-icon">
+        <i class="fas fa-user"></i>
+        <input type="text" id="name" class="form-control" placeholder="请输入您的姓名" required />
+      </div>
+    </div>
+
+    <!-- 邮箱 -->
+    <div class="form-group">
+      <label for="email">邮箱</label>
+      <div class="input-with-icon">
+        <i class="fas fa-envelope"></i>
+        <input type="email" id="email" class="form-control" placeholder="your@email.com" required />
+      </div>
+    </div>
+
+    <!-- 密码 -->
+    <div class="form-group">
+      <label for="password">密码</label>
+      <div class="input-with-icon">
+        <i class="fas fa-lock"></i>
+        <input type="password" id="password" class="form-control" placeholder="至少6位字符" minlength="6" required />
+      </div>
+    </div>
+
+    <!-- 确认密码 -->
+    <div class="form-group">
+      <label for="confirmPassword">确认密码</label>
+      <div class="input-with-icon">
+        <i class="fas fa-check-circle"></i>
+        <input type="password" id="confirmPassword" class="form-control" placeholder="请再次输入密码" required />
+      </div>
+    </div>
+
+    <!-- 同意条款 -->
+    <div class="terms">
+      <label>
+        <input type="checkbox" required />
+        我已阅读并同意
+        <a href="#" target="_blank">用户协议</a> 和
+        <a href="#" target="_blank">隐私政策</a>
+      </label>
+    </div>
+
+    <!-- 注册按钮 -->
+    <button type="submit" class="btn-register">立即注册</button>
+
+    <!-- 登录链接 -->
+    <div class="login-link">
+      已有账号？
+      <a href="#">立即登录</a>
+    </div>
+  </form>
+</div>
+
+<script>
+  // 简单的密码一致性验证
+  document.getElementById('registerForm').addEventListener('submit', function(e) {
+    const password = document.getElementById('password').value;
+    const confirmPassword = document.getElementById('confirmPassword').value;
+
+    if (password !== confirmPassword) {
+      e.preventDefault();
+      alert('两次输入的密码不一致，请检查。');
+      return false;
+    }
+
+    // 可在此处添加实际提交逻辑（如 fetch API）
+    // alert('注册成功！'); // 示例
+  });
+</script>
+</body>
+</html>

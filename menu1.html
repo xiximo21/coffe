@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>咖啡馆菜单</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+            /* 以下为自定义样式 */
+        .back-home-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            background: rgba(255, 255, 255, 0.85);
+            border-radius: 20px;
+            font-weight: 600;
+            color: #000;
+            text-decoration: none;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(141, 110, 99, 0.3);
+            transition: all 0.3s ease;
+            position: fixed;
+            top: 20px;
+            left: 20px;
+        }
+        .back-home-btn:hover {
+            background: white;
+            color: #8d6e63;
+            transform: translateX(-4px);
+        }
+
+        .cart-pulse {
+            animation: pulseHighlight 0.6s ease-out;
+        }
+        @keyframes pulseHighlight {
+            0% { box-shadow: 0 0 0 0 rgba(141, 110, 99, 0.7); }
+            70% { box-shadow: 0 0 0 12px rgba(141, 110, 99, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(141, 110, 99, 0); }
+        }
+        #cart-button {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background-color: #8d6e63;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            z-index: 1000;
+        }
+        #cart-badge {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background-color: red;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 12px;
+        }
+        .hover-scale:hover {
+            transform: translateY(-4px);
+            transition: transform 0.3s ease;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .font-playfair {
+            font-family: 'Playfair Display', serif;
+        }
+        :root {
+            --coffee-dark: #3E2723;
+            --coffee-accent: #8D6E63;
+            --coffee-cream: #EFEBE9;
+        }
+        .text-coffee-dark { color: var(--coffee-dark); }
+        .text-coffee-accent { color: var(--coffee-accent); }
+        .bg-coffee-dark { background-color: var(--coffee-dark); }
+        .bg-coffee-accent { background-color: var(--coffee-accent); }
+        .bg-coffee-cream\/10 { background-color: rgba(239, 235, 233, 0.1); }
+        .border-coffee-accent { border-color: var(--coffee-accent); }
+    </style>
+</head>
+<body class="bg-coffee-cream">
+
+<div class="container mx-auto px-4 py-6">
+
+    <h1 class="text-3xl font-playfair font-bold text-center text-coffee-dark mb-6">我们的菜单</h1>
+        <!-- 分类导航 -->
+        <div class="flex flex-wrap justify-center gap-3 mb-8">
+            <button class="px-4 py-2 rounded-full text-sm font-medium bg-coffee-dark text-white hover:bg-coffee-accent transition-colors" data-filter="all">全部</button>
+            <button class="px-4 py-2 rounded-full text-sm font-medium bg-white text-coffee-dark hover:bg-coffee-accent hover:text-white border border-coffee-accent transition-colors" data-filter="hand-drip">手冲咖啡</button>
+            <button class="px-4 py-2 rounded-full text-sm font-medium bg-white text-coffee-dark hover:bg-coffee-accent hover:text-white border border-coffee-accent transition-colors" data-filter="espresso">意式咖啡</button>
+            <button class="px-4 py-2 rounded-full text-sm font-medium bg-white text-coffee-dark hover:bg-coffee-accent hover:text-white border border-coffee-accent transition-colors" data-filter="dessert">甜点</button>
+            <button class="px-4 py-2 rounded-full text-sm font-medium bg-white text-coffee-dark hover:bg-coffee-accent hover:text-white border border-coffee-accent transition-colors" data-filter="light-meal">轻食</button>
+        </div>
+
+        <!-- 所有商品放在同一个 grid 容器中 -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+            <!-- 1. 埃塞俄比亚手冲 -->
+            <div class="menu-item" data-category="hand-drip" onclick="if(!event.target.closest('.add-to-cart')) window.location.href='detail-espresso.html'">
+                <div class="bg-white rounded-xl overflow-hidden shadow-md border border-gray-100 hover-scale">
+                    <img src="images/kafe1.webp" alt="埃塞俄比亚手冲" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-bold text-gray-900">埃塞俄比亚手冲</h3>
+                            <span class="text-coffee-accent font-bold">¥42</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-4">果香浓郁，花香四溢，酸度明亮，回甘悠长</p>
+                        <button class="w-full bg-coffee-dark hover:bg-coffee-accent text-white py-2 rounded-lg transition-colors text-sm add-to-cart"
+                                data-name="埃塞俄比亚手冲" data-price="42" data-img="images/kafe1.webp">
+                            <i class="fa fa-plus-circle mr-2"></i>加入购物车
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. 拿铁咖啡 -->
+            <div class="menu-item" data-category="espresso" onclick="if(!event.target.closest('.add-to-cart')) window.location.href='detail-natie.html'">
+                <div class="bg-white rounded-xl overflow-hidden shadow-md border border-gray-100 hover-scale">
+                    <img src="images/natie.jpg" alt="拿铁咖啡" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-bold text-gray-900">拿铁咖啡</h3>
+                            <span class="text-coffee-accent font-bold">¥32</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-4">丝滑奶泡搭配浓缩咖啡，口感醇厚，奶香浓郁</p>
+                        <button class="w-full bg-coffee-dark hover:bg-coffee-accent text-white py-2 rounded-lg transition-colors text-sm add-to-cart"
+                                data-name="拿铁咖啡" data-price="32" data-img="images/natie.jpg">
+                            <i class="fa fa-plus-circle mr-2"></i>加入购物车
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!-- 3. 焦糖玛奇朵 -->
+            <div class="menu-item" data-category="espresso" onclick="if(!event.target.closest('.add-to-cart')) window.location.href='detail-maqit.html'">
+                <div class="bg-white rounded-xl overflow-hidden shadow-md border border-gray-100 hover-scale">
+                    <img src="images/maqit.jpg" alt="焦糖玛奇朵" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-bold text-gray-900">焦糖玛奇朵</h3>
+                            <span class="text-coffee-accent font-bold">¥38</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-4">香甜焦糖酱，丝滑牛奶，浓缩咖啡的完美融合</p>
+                        <button class="w-full bg-coffee-dark hover:bg-coffee-accent text-white py-2 rounded-lg transition-colors text-sm add-to-cart"
+                                data-name="焦糖玛奇朵" data-price="38" data-img="images/matcha-cake.jpg">
+                            <i class="fa fa-plus-circle mr-2"></i>加入购物车
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. 美式咖啡 -->
+            <div class="menu-item" data-category="espresso" onclick="if(!event.target.closest('.add-to-cart')) window.location.href='detail-meishi.html'">
+                <div class="bg-white rounded-xl overflow-hidden shadow-md border border-gray-100 hover-scale">
+                    <img src="images/meishi.jpg" alt="美式咖啡" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-bold text-gray-900">美式咖啡</h3>
+                            <span class="text-coffee-accent font-bold">¥28</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-4">纯正浓缩咖啡加水，口感清爽，回味甘甜</p>
+                        <button class="w-full bg-coffee-dark hover:bg-coffee-accent text-white py-2 rounded-lg transition-colors text-sm add-to-cart"
+                                data-name="美式咖啡" data-price="28" data-img="images/meishi.jpg">
+                            <i class="fa fa-plus-circle mr-2"></i>加入购物车
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. 提拉米苏 -->
+            <div class="menu-item" data-category="dessert" onclick="if(!event.target.closest('.add-to-cart')) window.location.href='detail-tilams.html'">
+                <div class="bg-white rounded-xl overflow-hidden shadow-md border border-gray-100 hover-scale">
+                    <img src="images/tilams.jpg" alt="提拉米苏" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-bold text-gray-900">提拉米苏</h3>
+                            <span class="text-coffee-accent font-bold">¥36</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-4">经典意式甜点，咖啡酒浸泡手指饼干，马斯卡彭奶酪</p>
+                        <button class="w-full bg-coffee-dark hover:bg-coffee-accent text-white py-2 rounded-lg transition-colors text-sm add-to-cart"
+                                data-name="提拉米苏" data-price="36" data-img="images/tilams.jpg">
+                            <i class="fa fa-plus-circle mr-2"></i>加入购物车
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 6. 牛油果三明治 -->
+            <div class="menu-item" data-category="light-meal" onclick="if(!event.target.closest('.add-to-cart')) window.location.href='detail-smz.html'">
+                <div class="bg-white rounded-xl overflow-hidden shadow-md border border-gray-100 hover-scale">
+                    <img src="images/smz.jpg" alt="牛油果三明治" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-bold text-gray-900">牛油果三明治</h3>
+                            <span class="text-coffee-accent font-bold">¥35</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-4">全麦面包，新鲜牛油果，水煮蛋，芝麻菜，健康轻食</p>
+                        <button class="w-full bg-coffee-dark hover:bg-coffee-accent text-white py-2 rounded-lg transition-colors text-sm add-to-cart"
+                                data-name="牛油果三明治" data-price="35" data-img="images/smz.jpg">
+                            <i class="fa fa-plus-circle mr-2"></i>加入购物车
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 7. 冰美式 -->
+            <div class="menu-item" data-category="espresso">
+                <div class="bg-coffee-cream/10 rounded-xl overflow-hidden shadow-md hover-scale">
+                    <img src="images/iced-americano.jpg" alt="冰美式" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-playfair font-bold text-xl text-coffee-dark">冰美式</h3>
+                            <span class="text-coffee-accent font-bold">¥30</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-4">浓缩咖啡加冰水，清爽提神，适合夏日</p>
+                        <button class="w-full bg-coffee-dark hover:bg-coffee-accent text-white py-2 rounded-lg transition-colors text-sm add-to-cart"
+                                data-name="冰美式" data-price="30" data-img="images/iced-americano.jpg">
+                            <i class="fa fa-plus-circle mr-2"></i>加入购物车
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 8. 摩卡 -->
+            <div class="menu-item" data-category="espresso">
+                <div class="bg-coffee-cream/10 rounded-xl overflow-hidden shadow-md hover-scale">
+                    <img src="images/mocha.jpg" alt="摩卡" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-playfair font-bold text-xl text-coffee-dark">摩卡</h3>
+                            <span class="text-coffee-accent font-bold">¥36</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-4">巧克力酱与浓缩咖啡融合，奶香浓郁，甜蜜可口</p>
+                        <button class="w-full bg-coffee-dark hover:bg-coffee-accent text-white py-2 rounded-lg transition-colors text-sm add-to-cart"
+                                data-name="摩卡" data-price="36" data-img="images/mocha.jpg">
+                            <i class="fa fa-plus-circle mr-2"></i>加入购物车
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 9. 蓝莓酸奶杯 -->
+            <div class="menu-item" data-category="light-meal">
+                <div class="bg-coffee-cream/10 rounded-xl overflow-hidden shadow-md hover-scale">
+                    <img src="images/yogurt-cup.jpg" alt="蓝莓酸奶杯" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-playfair font-bold text-xl text-coffee-dark">蓝莓酸奶杯</h3>
+                            <span class="text-coffee-accent font-bold">¥28</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-4">希腊酸奶搭配新鲜蓝莓，低脂健康早餐首选</p>
+                        <button class="w-full bg-coffee-dark hover:bg-coffee-accent text-white py-2 rounded-lg transition-colors text-sm add-to-cart"
+                                data-name="蓝莓酸奶杯" data-price="28" data-img="images/yogurt-cup.jpg">
+                            <i class="fa fa-plus-circle mr-2"></i>加入购物车
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 10. 哥伦比亚慧兰 -->
+            <div class="menu-item" data-category="hand-drip">
+                <div class="bg-coffee-cream/10 rounded-xl overflow-hidden shadow-md hover-scale">
+                    <img src="images/colombia.jpg" alt="哥伦比亚慧兰" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-playfair font-bold text-xl text-coffee-dark">哥伦比亚慧兰</h3>
+                            <span class="text-coffee-accent font-bold">¥40</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-4">坚果香气，焦糖甜感，口感平衡顺滑</p>
+                        <button class="w-full bg-coffee-dark hover:bg-coffee-accent text-white py-2 rounded-lg transition-colors text-sm add-to-cart"
+                                data-name="哥伦比亚慧兰" data-price="40" data-img="images/colombia.jpg">
+                            <i class="fa fa-plus-circle mr-2"></i>加入购物车
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 11. 肯尼亚 AA -->
+            <div class="menu-item" data-category="hand-drip">
+                <div class="bg-coffee-cream/10 rounded-xl overflow-hidden shadow-md hover-scale">
+                    <img src="images/kenya.jpg" alt="肯尼亚 AA" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-playfair font-bold text-xl text-coffee-dark">肯尼亚 AA</h3>
+                            <span class="text-coffee-accent font-bold">¥45</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-4">黑醋栗果酸，莓果风味，明亮活泼</p>
+                        <button class="w-full bg-coffee-dark hover:bg-coffee-accent text-white py-2 rounded-lg transition-colors text-sm add-to-cart"
+                                data-name="肯尼亚 AA" data-price="45" data-img="images/kenya.jpg">
+                            <i class="fa fa-plus-circle mr-2"></i>加入购物车
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 12. 抹茶芝士蛋糕 -->
+            <div class="menu-item" data-category="dessert">
+                <div class="bg-coffee-cream/10 rounded-xl overflow-hidden shadow-md hover-scale">
+                    <img src="images/matcha-cake.jpg" alt="抹茶芝士蛋糕" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-playfair font-bold text-xl text-coffee-dark">抹茶芝士蛋糕</h3>
+                            <span class="text-coffee-accent font-bold">¥38</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-4">日式抹茶融合轻盈芝士，微苦回甘</p>
+                        <button class="w-full bg-coffee-dark hover:bg-coffee-accent text-white py-2 rounded-lg transition-colors text-sm add-to-cart"
+                                data-name="抹茶芝士蛋糕" data-price="38" data-img="images/matcha-cake.jpg">
+                            <i class="fa fa-plus-circle mr-2"></i>加入购物车
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 13. 焦糖布丁 -->
+            <div class="menu-item" data-category="dessert">
+                <div class="bg-coffee-cream/10 rounded-xl overflow-hidden shadow-md hover-scale">
+                    <img src="images/caramel-pudding.jpg" alt="焦糖布丁" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-playfair font-bold text-xl text-coffee-dark">焦糖布丁</h3>
+                            <span class="text-coffee-accent font-bold">¥32</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-4">香滑蛋奶布丁，顶层脆焦糖壳</p>
+                        <button class="w-full bg-coffee-dark hover:bg-coffee-accent text-white py-2 rounded-lg transition-colors text-sm add-to-cart"
+                                data-name="焦糖布丁" data-price="32" data-img="images/caramel-pudding.jpg">
+                            <i class="fa fa-plus-circle mr-2"></i>加入购物车
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div> <!-- end grid -->
+    </div>
+<!-- 返回首页按钮 -->
+<a href="index.html" class="back-home-btn"><i class="fa fa-arrow-left"></i> 首页</a>
+
+<!-- 页面内容 -->
+<h1 class="text-3xl font-playfair font-bold text-center text-coffee-dark mb-6">我们的菜单</h1>
+<!-- 分类导航和菜单卡片... -->
+
+<!-- 购物车按钮 -->
+<div id="cart-button" class="fixed">
+    <i class="fas fa-shopping-cart text-lg"></i>
+    <span id="cart-badge" class="hidden"></span>
+</div>
+
+<!-- JavaScript -->
+<script>
+    // 分类筛选逻辑
+    document.addEventListener('DOMContentLoaded', function () {
+        const filterButtons = document.querySelectorAll('[data-filter]');
+        const menuItems = document.querySelectorAll('.menu-item');
+
+        function filterMenu(category) {
+            menuItems.forEach(item => {
+                if (category === 'all' || item.dataset.category === category) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+
+            filterButtons.forEach(btn => {
+                btn.classList.remove('bg-coffee-dark', 'text-white');
+                btn.classList.add('bg-white', 'text-coffee-dark', 'border', 'border-coffee-accent');
+            });
+            const activeBtn = document.querySelector(`[data-filter="${category}"]`);
+            if (activeBtn) {
+                activeBtn.classList.remove('bg-white', 'text-coffee-dark', 'border', 'border-coffee-accent');
+                activeBtn.classList.add('bg-coffee-dark', 'text-white');
+            }
+        }
+
+        filterButtons.forEach(btn => {
+            btn.addEventListener('click', function () {
+                const filter = this.dataset.filter;
+                filterMenu(filter);
+            });
+        });
+
+        filterMenu('all');
+
+        // 加入购物车功能
+        const cartButtons = document.querySelectorAll('.add-to-cart');
+        cartButtons.forEach(btn => {
+            btn.addEventListener('click', function () {
+                const name = this.dataset.name;
+                const price = parseFloat(this.dataset.price);
+                const img = this.dataset.img;
+
+                let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+                // 检查是否已存在
+                const existing = cart.find(item => item.name === name);
+                if (existing) {
+                    existing.quantity += 1;
+                } else {
+                    cart.push({ name, price, img, quantity: 1 });
+                }
+
+                localStorage.setItem('cart', JSON.stringify(cart));
+
+                // 简易反馈
+                const originalText = this.innerHTML;
+                this.innerHTML = '<i class="fa fa-check mr-2"></i>已添加！';
+                setTimeout(() => {
+                    this.innerHTML = originalText;
+                }, 1000);
+            });
+        });
+    });
+    // 示例代码，用于演示如何更新购物车徽章
+    function updateCartBadge(count) {
+        const badge = document.getElementById('cart-badge');
+        if (count > 0) {
+            badge.textContent = count;
+            badge.classList.remove('hidden');
+        } else {
+            badge.classList.add('hidden');
+        }
+    }
+
+    // 假设这里有一个事件监听器，当商品被添加到购物车时触发
+    document.querySelector('#cart-button').addEventListener('click', () => {
+        alert('购物车功能开发中...\n商品已保存在本地。');
+        // 更新购物车徽章计数（此数据应来自实际的购物车状态）
+        updateCartBadge(3); // 示例中直接设置为3
+    });
+</script>
+</body>
+</html>

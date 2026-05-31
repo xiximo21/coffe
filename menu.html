@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>咖啡馆菜单</title>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        background-color: #FDF9F7;
+        font-family: "Microsoft YaHei", sans-serif;
+        padding: 20px 0;
+    }
+
+    h1 {
+        text-align: center;
+        color: #3E2723;
+        margin-bottom: 20px;
+        font-size: 28px;
+    }
+
+    hr {
+        border: none;
+        height: 6px;
+        background-color: #8D6E63;
+        border-radius: 3px;
+        width: 80%;
+        margin: 0 auto 30px;
+    }
+
+    .showBox {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 10px;
+    }
+
+    .showBox li {
+        width: 280px; /* 固定卡片宽度 */
+        border: 2px solid #8D6E63;
+        background-color: #EFEBE9;
+        border-radius: 8px;
+        overflow: hidden;
+        transition: transform 0.3s ease;
+    }
+
+    .showBox li:hover {
+        transform: translateY(-5px);
+    }
+
+    .imgBox {
+        width: 100%;
+        height: 180px;
+        overflow: hidden;
+    }
+
+    .imgBox img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s, opacity 0.3s;
+        opacity: 0.9;
+    }
+
+    .showBox li:hover .imgBox img {
+        transform: scale(1.05);
+        opacity: 1;
+    }
+
+    .txtBox {
+        padding: 14px;
+    }
+
+    .txtBox h3 {
+        font-size: 18px;
+        color: #3E2723;
+        margin-bottom: 6px;
+        font-weight: bold;
+    }
+
+    .txtBox .price {
+        font-weight: bold;
+        color: #8D6E63;
+        margin-bottom: 8px;
+        font-size: 16px;
+    }
+
+    .txtBox p {
+        font-size: 14px;
+        color: #555;
+        line-height: 1.5;
+    }
+    .add-to-cart-btn {
+        background-color: #8D6E63;
+        border: none;
+        color: white;
+        padding: 8px 16px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 14px;
+        margin-top: 10px;
+        cursor: pointer;
+        border-radius: 4px;
+        transition: background-color 0.3s ease;
+    }
+
+    .add-to-cart-btn:hover {
+        background-color: #5D4037;
+    }
+</style>
+</head>
+
+<body>
+    <h1>我们的菜单</h1>
+    <hr>
+
+    <ul class="showBox">
+        <li>
+            <div class="imgBox">
+                <a href="detail-espresso.html" class="block w-full h-full">
+                 <img src="images/kafe1.webp" alt="埃塞俄比亚手冲">
+                </a>
+            </div>
+            <div class="txtBox">
+                <h3>埃塞俄比亚手冲</h3>
+                <div class="price">¥42</div>
+                <p>果香浓郁，花香四溢，酸度明亮，回甘悠长</p>
+                  <button class="add-to-cart-btn">加入购物车</button>
+            </div>
+        </li>
+
+        <li>
+            <div class="imgBox">
+                 <a href="detail-natie.html" class="block w-full h-full">
+                <img src="images/natie.jpg" alt="拿铁咖啡">
+                </a>
+                </div>
+            </div>
+            <div class="txtBox">
+                <h3>拿铁咖啡</h3>
+                <div class="price">¥32</div>
+                <p>丝滑奶泡搭配浓缩咖啡，口感醇厚，奶香浓郁</p>
+                  <button class="add-to-cart-btn">加入购物车</button>
+            </div>
+        </li>
+
+        <li>
+            <div class="imgBox">
+                <a href="detail-maqit.html" class="block w-full h-full">
+                <img src="images/maqit.jpg" alt="焦糖玛奇朵">
+                </a>
+            </div>
+            <div class="txtBox">
+                <h3>焦糖玛奇朵</h3>
+                <div class="price">¥38</div>
+                <p>香甜焦糖酱，丝滑牛奶，浓缩咖啡的完美融合</p>
+                  <button class="add-to-cart-btn">加入购物车</button>
+            </div>
+        </li>
+
+        <li>
+            <div class="imgBox">
+                 <a href="detail-meishi.html" class="block w-full h-full">
+                <img src="images/meishi.jpg" alt="美式咖啡">
+                </a>
+            </div>
+            <div class="txtBox">
+                <h3>美式咖啡</h3>
+                <div class="price">¥28</div>
+                <p>纯正浓缩咖啡加水，口感清爽，回味甘甜</p>
+                  <button class="add-to-cart-btn">加入购物车</button>
+            </div>
+        </li>
+
+        <li>
+            <div class="imgBox">
+                   <a href=" detail-tilams.html" class="block w-full h-full">
+                <img src="images/tilams.jpg" alt="提拉米苏">
+                </a>
+            </div>
+            <div class="txtBox">
+                <h3>提拉米苏</h3>
+                <div class="price">¥36</div>
+                <p>经典意式甜点，咖啡酒浸泡手指饼干，马斯卡彭奶酪</p>
+                  <button class="add-to-cart-btn">加入购物车</button>
+            </div>
+        </li>
+
+        <li>
+            <div class="imgBox">
+                <a href="detail-smz.html" class="block w-full h-full">
+                <img src="images/smz.jpg" alt="牛油果三明治">
+                </a>
+            </div>
+            <div class="txtBox">
+                <h3>牛油果三明治</h3>
+                <div class="price">¥35</div>
+                <p>全麦面包，新鲜牛油果，水煮蛋，芝麻菜，健康轻食</p>
+                  <button class="add-to-cart-btn">加入购物车</button>
+            </div>
+        </li>
+
+        <li>
+            <div class="imgBox">
+                 <a href=" detail-meishi.html" class="block w-full h-full">
+                <img src="images/iced-americano.jpg" alt="冰美式">
+                </a>
+            </div>
+            <div class="txtBox">
+                <h3>冰美式</h3>
+                <div class="price">¥30</div>
+                <p>浓缩咖啡加冰水，清爽提神，适合夏日</p>
+                  <button class="add-to-cart-btn">加入购物车</button>
+            </div>
+        </li>
+
+        <li>
+            <div class="imgBox">
+                <a href=" detail-maqit" class="block w-full h-full">
+                <img src="images/mocha.jpg" alt="摩卡">
+                </a>
+            </div>
+            <div class="txtBox">
+                <h3>摩卡</h3>
+                <div class="price">¥36</div>
+                <p>巧克力酱与浓缩咖啡融合，奶香浓郁，甜蜜可口</p>
+                  <button class="add-to-cart-btn">加入购物车</button>
+            </div>
+        </li>
+
+        <li>
+            <div class="imgBox">
+                 <a href=" detail-yogurt-cup.html" class="block w-full h-full">
+                <img src="images/yogurt-cup.jpg" alt="蓝莓酸奶杯">
+                </a>
+            </div>
+            <div class="txtBox">
+                <h3>蓝莓酸奶杯</h3>
+                <div class="price">¥28</div>
+                <p>希腊酸奶搭配新鲜蓝莓，低脂健康早餐首选</p>
+                  <button class="add-to-cart-btn">加入购物车</button>
+            </div>
+        </li>
+
+        <li>
+            <div class="imgBox">
+                <img src="images/colombia.jpg" alt="哥伦比亚慧兰">
+            </div>
+            <div class="txtBox">
+                <h3>哥伦比亚慧兰</h3>
+                <div class="price">¥40</div>
+                <p>坚果香气，焦糖甜感，口感平衡顺滑</p>
+                  <button class="add-to-cart-btn">加入购物车</button>
+            </div>
+        </li>
+
+        <li>
+            <div class="imgBox">
+                <img src="images/kenya.jpg" alt="肯尼亚 AA">
+            </div>
+            <div class="txtBox">
+                <h3>肯尼亚 AA</h3>
+                <div class="price">¥45</div>
+                <p>黑醋栗果酸，莓果风味，明亮活泼</p>
+                  <button class="add-to-cart-btn">加入购物车</button>
+            </div>
+        </li>
+
+        <li>
+            <div class="imgBox">
+                <img src="images/matcha-cake.jpg" alt="抹茶芝士蛋糕">
+            </div>
+            <div class="txtBox">
+                <h3>抹茶芝士蛋糕</h3>
+                <div class="price">¥38</div>
+                <p>日式抹茶融合轻盈芝士，微苦回甘</p>
+                  <button class="add-to-cart-btn">加入购物车</button>
+            </div>
+        </li>
+
+        <li>
+            <div class="imgBox">
+                <img src="images/caramel-pudding.jpg" alt="焦糖布丁">
+            </div>
+            <div class="txtBox">
+                <h3>焦糖布丁</h3>
+                <div class="price">¥32</div>
+                <p>香滑蛋奶布丁，顶层脆焦糖壳</p>
+                  <button class="add-to-cart-btn">加入购物车</button>
+            </div>
+        </li>
+    </ul>
+</body>
+</html>

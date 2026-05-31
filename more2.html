@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>Brew Haven - 环境画廊</title>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f9f7f4;
+        color: #333;
+        padding: 2rem;
+    }
+
+
+    ul, div, li, img {
+        transition: all 0.5s ease; /* 原为 3s，太慢，建议 0.5s；可改回 3s 若坚持 */
+    }
+
+    ul {
+        padding: 0;
+        list-style: none;
+    }
+
+
+    .showBox {
+        margin: 0 auto;
+        width: 80%;
+        border: 3px solid #5c3a2a; /* 改为咖啡色系 */
+        overflow: hidden; /* 清除浮动 */
+    }
+
+
+    .showBox li {
+        float: left;
+        margin: 0;
+        border: 3px solid #d19160; /* 浅咖啡边框 */
+        background: #fff;
+        padding: 15px;
+        width: 33.33%; /* 三列布局 */
+        min-height: 320px;
+        display: flex;
+        flex-direction: column;
+    }
+
+
+    .imgBox {
+        width: 100%;
+        height: 200px;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .imgBox img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 0.6;
+    }
+
+    .showBox li:hover .imgBox img {
+        transform: scale(1.1);
+        opacity: 1;
+    }
+
+
+    .txtBox {
+        margin-top: 12px;
+        text-align: center;
+        flex-grow: 1;
+    }
+
+    .txtBox p {
+        margin: 6px 0;
+        font-size: 0.95rem;
+        color: #5c3a2a;
+        line-height: 1.5;
+    }
+
+
+    h1 {
+        text-align: center;
+        font-size: 2.2rem;
+        color: #5c3a2a;
+        margin-bottom: 1rem;
+    }
+
+    hr {
+        width: 90%;
+        margin: 0 auto 2rem;
+        height: 14px;
+        background: #d19160;
+        border: none;
+        border-radius: 20px;
+    }
+</style>
+</head>
+
+<body>
+    <h1>我们的环境</h1>
+    <hr>
+
+    <ul class="showBox">
+        <!-- 1 -->
+        <li>
+            <div class="imgBox">
+                <img src="images/bk1.jpg" alt="舒适座位区">
+            </div>
+            <div class="txtBox">
+                <p>在 Brew Haven，我们相信咖啡不仅是饮品，</p>
+                <p>更是一种生活态度。</p>
+            </div>
+        </li>
+        <!-- 2 -->
+        <li>
+            <div class="imgBox">
+                <img src="images/bk2.jpg" alt="手冲吧台">
+            </div>
+            <div class="txtBox">
+                <p>每一杯咖啡背后，是对品质的执着、</p>
+                <p>对细节的尊重。</p>
+            </div>
+        </li>
+        <!-- 3 -->
+        <li>
+            <div class="imgBox">
+                <img src="images/bk3.jpg" alt="窗边阅读角">
+            </div>
+            <div class="txtBox">
+                <p>安静角落，适合阅读与思考，</p>
+                <p>享受独处时光。</p>
+            </div>
+        </li>
+        <!-- 4 -->
+        <li>
+            <div class="imgBox">
+                <img src="images/bk4.jpg" alt="户外露台">
+            </div>
+            <div class="txtBox">
+                <p>阳光、微风与咖啡，</p>
+                <p>户外露台是放松的理想之地。</p>
+            </div>
+        </li>
+        <!-- 5 -->
+        <li>
+            <div class="imgBox">
+                <img src="images/bk5.jpg" alt="烘焙展示区">
+            </div>
+            <div class="txtBox">
+                <p>现场烘焙，香气四溢，</p>
+                <p>见证咖啡豆的蜕变。</p>
+            </div>
+        </li>
+        <!-- 6 -->
+        <li>
+            <div class="imgBox">
+                <img src="images/bk6.jpg" alt="夜间氛围">
+            </div>
+            <div class="txtBox">
+                <p>夜幕降临，暖光点亮空间，</p>
+                <p>营造温馨氛围。</p>
+            </div>
+        </li>
+        <!-- 7 -->
+        <li>
+            <div class="imgBox">
+                <img src="images/bk7.jpg" alt="绿植环绕区">
+            </div>
+            <div class="txtBox">
+                <p>绿意盎然，自然融入空间，</p>
+                <p>带来清新与宁静。</p>
+            </div>
+        </li>
+        <!-- 8 -->
+        <li>
+            <div class="imgBox">
+                <img src="images/bk8.jpg" alt="木质长桌区">
+            </div>
+            <div class="txtBox">
+                <p>原木质感，温暖质朴，</p>
+                <p>适合朋友聚会或工作。</p>
+            </div>
+        </li>
+        <!-- 9 -->
+        <li>
+            <div class="imgBox">
+                <img src="images/bk9.jpg" alt="艺术墙面">
+            </div>
+            <div class="txtBox">
+                <p>艺术与咖啡交融，</p>
+                <p>激发灵感与对话。</p>
+            </div>
+        </li>
+        <!-- 10 -->
+        <li>
+            <div class="imgBox">
+                <img src="images/bk10.jpg" alt="私密卡座">
+            </div>
+            <div class="txtBox">
+                <p>私密卡座，安静舒适，</p>
+                <p>适合深度交谈或独处。</p>
+            </div>
+        </li>
+        <!-- 11 -->
+        <li>
+            <div class="imgBox">
+                <img src="images/bk11.jpg" alt="咖啡豆展示架">
+            </div>
+            <div class="txtBox">
+                <p>精选全球咖啡豆，</p>
+                <p>透明展示，溯源可查。</p>
+            </div>
+        </li>
+        <!-- 12 -->
+        <li>
+            <div class="imgBox">
+                <img src="images/bk12.jpg" alt="晨光角落">
+            </div>
+            <div class="txtBox">
+                <p>清晨第一缕阳光洒落，</p>
+                <p>开启美好的一天。</p>
+            </div>
+        </li>
+    </ul>
+</body>
+</html>

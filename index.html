@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brew Haven | 精品咖啡体验</title>
+    <!-- 引入外部资源 -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <!-- 配置Tailwind自定义颜色 -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'coffee-dark': '#4A2C2A',
+                        'coffee-accent': '#8B5A2B',
+                        'coffee-medium': '#A67C52',
+                        'coffee-cream': '#F5F1E9',
+                        'coffee-light': '#F9F5F0'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- 自定义样式 -->
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .text-shadow {
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            }
+            .hover-scale {
+                transition: transform 0.3s ease;
+            }
+            .hover-scale:hover {
+                transform: scale(1.05);
+            }
+            .coffee-gradient {
+                background: linear-gradient(135deg, #4A2C2A 0%, #8B5A2B 100%);
+            }
+        }
+
+        /* 导入字体 */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap');
+
+        /* 基础样式 */
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        /* 滚动条样式 */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #8B5A2B;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #4A2C2A;
+        }
+
+        /* 动画效果 */
+        .fade-in {
+            animation: fadeIn 0.8s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+
+<body class="bg-coffee-cream/10 text-coffee-dark">
+<!-- 导航栏 -->
+<nav id="navbar" class="fixed w-full z-50 transition-all duration-300 bg-transparent">
+    <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+        <!-- 品牌Logo -->
+        <a href="#" class="flex items-center space-x-2">
+            <i class="fa fa-coffee text-3xl text-coffee-accent"></i>
+            <span class="font-playfair font-bold text-2xl text-coffee-dark">Brew Haven</span>
+        </a>
+
+        <!-- 桌面导航 -->
+        <div class="hidden md:flex items-center space-x-8">
+            <a href="#home" class="text-coffee-dark hover:text-coffee-accent transition-colors">首页</a>
+            <a href="#menu" class="text-coffee-dark hover:text-coffee-accent transition-colors">菜单</a>
+            <a href="#about" class="text-coffee-dark hover:text-coffee-accent transition-colors">关于我们</a>
+            <a href="#contact" class="text-coffee-dark hover:text-coffee-accent transition-colors">联系我们</a>
+            <button id="loginBtn" class="bg-coffee-accent hover:bg-coffee-medium text-white px-4 py-2 rounded-full transition-colors">
+                <i class="fa fa-user mr-2"></i>登录
+            </button>
+        </div>
+
+        <!-- 移动端菜单按钮 -->
+        <button id="mobileMenuBtn" class="md:hidden text-coffee-dark text-2xl">
+            <i class="fa fa-bars"></i>
+        </button>
+    </div>
+
+    <!-- 移动端导航菜单 -->
+    <div id="mobileMenu" class="md:hidden hidden bg-white shadow-lg absolute w-full">
+        <div class="container mx-auto px-4 py-4 flex flex-col space-y-4">
+            <a href="#home" class="text-coffee-dark hover:text-coffee-accent transition-colors py-2 border-b border-gray-100">首页</a>
+            <a href="#menu" class="text-coffee-dark hover:text-coffee-accent transition-colors py-2 border-b border-gray-100">菜单</a>
+            <a href="#about" class="text-coffee-dark hover:text-coffee-accent transition-colors py-2 border-b border-gray-100">关于我们</a>
+            <a href="#contact" class="text-coffee-dark hover:text-coffee-accent transition-colors py-2 border-b border-gray-100">联系我们</a>
+            <button id="mobileLoginBtn" class="bg-coffee-accent hover:bg-coffee-medium text-white px-4 py-2 rounded-full transition-colors w-full">
+                <i class="fa fa-user mr-2"></i>登录
+            </button>
+        </div>
+    </div>
+</nav>
+
+<!-- 登录模态框 -->
+<div id="loginModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden fade-in">
+    <div class="bg-white rounded-xl shadow-2xl w-full max-w-md mx-4 overflow-hidden">
+        <!-- 登录表单头部 -->
+        <div class="coffee-gradient p-6 text-white">
+            <div class="flex justify-between items-center">
+                <h3 class="font-playfair font-bold text-2xl">欢迎回来</h3>
+                <button id="closeLoginModal" class="text-white hover:text-coffee-cream">
+                    <i class="fa fa-times text-xl"></i>
+                </button>
+            </div>
+            <p class="mt-2 opacity-90">登录您的账号，享受专属咖啡体验</p>
+        </div>
+
+        <!-- 登录表单主体 -->
+        <div class="p-6">
+            <form id="loginForm" class="space-y-4">
+                <div>
+                    <label for="email" class="block text-sm font-medium text-coffee-dark mb-1">邮箱</label>
+                    <div class="relative">
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-coffee-medium">
+                                <i class="fa fa-envelope"></i>
+                            </span>
+                        <input type="email" id="email" class="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-coffee-accent/50 focus:border-coffee-accent transition-colors" placeholder="your@email.com" required>
+                    </div>
+                </div>
+
+                <div>
+                    <label for="password" class="block text-sm font-medium text-coffee-dark mb-1">密码</label>
+                    <div class="relative">
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-coffee-medium">
+                                <i class="fa fa-lock"></i>
+                            </span>
+                        <input type="password" id="password" class="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-coffee-accent/50 focus:border-coffee-accent transition-colors" placeholder="••••••••" required>
+                    </div>
+                    <div class="flex justify-end mt-1">
+                        <a href="#" class="text-xs text-coffee-medium hover:text-coffee-accent">忘记密码？</a>
+                    </div>
+                </div>
+
+                <button type="submit" class="w-full bg-coffee-accent hover:bg-coffee-medium text-white py-3 rounded-lg transition-colors font-medium">
+                    登录
+                </button>
+
+                <div class="text-center text-sm text-gray-500 mt-4">
+                    还没有账号？ <!-- 直接使用文件名，与index.html同级 -->
+                    <a href="register.html" class="text-coffee-accent hover:text-coffee-medium font-medium">立即注册</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- 用户已登录状态（修复嵌套结构） -->
+<div id="userMenu" class="hidden fixed top-4 right-4 z-50">
+    <div class="relative">
+        <button id="userMenuBtn" class="flex items-center space-x-2">
+            <img src="https://picsum.photos/id/64/40/40" alt="用户头像" class="w-8 h-8 rounded-full">
+            <span id="userName" class="font-medium">咖啡爱好者</span>
+            <i class="fa fa-chevron-down text-xs"></i>
+        </button>
+
+        <!-- 用户下拉菜单（已正确嵌套） -->
+        <div id="userDropdown" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg overflow-hidden">
+            <div class="py-2">
+                <a href="#" class="block px-4 py-2 text-sm text-coffee-dark hover:bg-coffee-cream/30">
+                    <i class="fa fa-user-circle mr-2"></i>个人资料
+                </a>
+                <a href="#" class="block px-4 py-2 text-sm text-coffee-dark hover:bg-coffee-cream/30">
+                    <i class="fa fa-heart mr-2"></i>我的收藏
+                </a>
+                <a href="#" class="block px-4 py-2 text-sm text-coffee-dark hover:bg-coffee-cream/30">
+                    <i class="fa fa-history mr-2"></i>订单历史
+                </a>
+                <hr class="my-1 border-gray-100">
+                <button id="logoutBtn" class="w-full text-left px-4 py-2 text-sm text-red-500 hover:bg-red-50">
+                    <i class="fa fa-sign-out mr-2"></i>退出登录
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 英雄区域（替换原有的英雄区代码） -->
+<section id="home" class="min-h-screen flex items-center relative overflow-hidden">
+    <div class="absolute inset-0 z-0">
+        <!-- 图片容器 -->
+        <div id="heroSlider" class="w-full h-full">
+            <!-- 咖啡图片列表 -->
+            <div class="slide absolute inset-0 opacity-100 transition-opacity duration-1000">
+                <img src="images/kafe.webp" alt="咖啡背景1" class="w-full h-full object-cover">
+            </div>
+            <div class="slide absolute inset-0 opacity-0 transition-opacity duration-1000">
+                <img src="images/kafe2.webp" alt="咖啡背景2" class="w-full h-full object-cover">
+            </div>
+            <div class="slide absolute inset-0 opacity-0 transition-opacity duration-1000">
+                <img src="images/kafe1.webp" alt="咖啡背景3" class="w-full h-full object-cover">
+            </div>
+            <div class="slide absolute inset-0 opacity-0 transition-opacity duration-1000">
+                <img src="images/kafe3.webp" alt="咖啡背景4" class="w-full h-full object-cover">
+            </div>
+
+            <!-- 遮罩层 -->
+            <div class="absolute inset-0 bg-black/40"></div>
+
+            <!-- 切换按钮 -->
+            <button id="prevBtn" class="absolute left-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm text-white flex items-center justify-center hover:bg-white/30 transition-colors">
+                <i class="fa fa-angle-left text-2xl"></i>
+            </button>
+            <button id="nextBtn" class="absolute right-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm text-white flex items-center justify-center hover:bg-white/30 transition-colors">
+                <i class="fa fa-angle-right text-2xl"></i>
+            </button>
+
+            <!-- 指示器 -->
+            <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10 flex space-x-2">
+                <span class="indicator w-3 h-3 rounded-full bg-white opacity-100"></span>
+                <span class="indicator w-3 h-3 rounded-full bg-white opacity-50"></span>
+                <span class="indicator w-3 h-3 rounded-full bg-white opacity-50"></span>
+                <span class="indicator w-3 h-3 rounded-full bg-white opacity-50"></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 文字内容（保持不变） -->
+    <div class="container mx-auto px-4 py-20 relative z-10">
+        <div class="max-w-2xl fade-in">
+            <h1 class="font-playfair font-bold text-[clamp(2.5rem,5vw,4.5rem)] text-white text-shadow leading-tight mb-6">
+                每一杯咖啡<br>都是匠心之作
+            </h1>
+            <p class="text-[clamp(1rem,2vw,1.25rem)] text-white/90 mb-8 max-w-xl">
+                精选全球顶级咖啡豆，传统工艺烘焙，只为带给您最纯正的咖啡体验。
+            </p>
+            <div class="flex flex-wrap gap-4">
+                <a href="#menu" class="bg-coffee-accent hover:bg-coffee-medium text-white px-8 py-3 rounded-full transition-colors font-medium">
+                    探索菜单
+                </a>
+                <a href="#about" class="bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white border border-white/40 px-8 py-3 rounded-full transition-colors font-medium">
+                    了解我们
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const slides = document.querySelectorAll('.slide');
+        const indicators = document.querySelectorAll('.indicator');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        let currentIndex = 0;
+        let slideInterval;
+
+        // 更新轮播状态
+        function updateSlides() {
+            slides.forEach((slide, index) => {
+                slide.classList.toggle('opacity-100', index === currentIndex);
+                slide.classList.toggle('opacity-0', index !== currentIndex);
+            });
+
+            indicators.forEach((indicator, index) => {
+                indicator.style.opacity = index === currentIndex ? '1' : '0.5';
+            });
+        }
+
+        // 下一张
+        function nextSlide() {
+            currentIndex = (currentIndex + 1) % slides.length;
+            updateSlides();
+        }
+
+        // 上一张
+        function prevSlide() {
+            currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+            updateSlides();
+        }
+
+        // 启动自动轮播
+        function startSlideInterval() {
+            slideInterval = setInterval(nextSlide, 5000);
+        }
+
+        // 绑定左右按钮
+        prevBtn.addEventListener('click', () => {
+            clearInterval(slideInterval);
+            prevSlide();
+            startSlideInterval();
+        });
+
+        nextBtn.addEventListener('click', () => {
+            clearInterval(slideInterval);
+            nextSlide();
+            startSlideInterval();
+        });
+
+        // 👇 新增：点击任意幻灯片图片也可切换到下一张
+        slides.forEach(slide => {
+            slide.addEventListener('click', () => {
+                clearInterval(slideInterval);
+                nextSlide(); // 点击就前进
+                startSlideInterval();
+            });
+        });
+
+        // 点击指示器切换
+        indicators.forEach((indicator, index) => {
+            indicator.addEventListener('click', () => {
+                clearInterval(slideInterval);
+                currentIndex = index;
+                updateSlides();
+                startSlideInterval();
+            });
+        });
+
+        // 开始轮播
+        startSlideInterval();
+
+        // 悬停暂停
+        const heroSlider = document.getElementById('heroSlider');
+        heroSlider.addEventListener('mouseenter', () => clearInterval(slideInterval));
+        heroSlider.addEventListener('mouseleave', startSlideInterval);
+    });
+</script>
+
+<!-- 滚动提示 -->
+<div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white animate-bounce">
+    <i class="fa fa-angle-down text-3xl"></i>
+</div>
+</section>
+<!-- 品牌理念与环境展示 -->
+<section class="py-20 bg-coffee-light">
+    <div class="container mx-auto px-4">
+        <!-- 品牌理念 -->
+        <div class="text-center mb-16 fade-in">
+            <h2 class="font-playfair font-bold text-[clamp(1.8rem,3vw,2.5rem)] text-coffee-dark mb-4">我们的理念</h2>
+            <p class="text-gray-700 max-w-3xl mx-auto text-lg">
+                在 Brew Haven，我们相信咖啡不仅是饮品，更是一种生活态度。
+                每一杯咖啡背后，是对品质的执着、对细节的尊重，以及对人与人之间连接的珍视。
+            </p>
+        </div>
+
+        <!-- 环境展示画廊 -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- 图片 1 -->
+            <div class="group overflow-hidden rounded-xl shadow-md hover:shadow-xl transition-shadow duration-300">
+                <img src="images/bk1.jpg" alt="舒适座位区" class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110">
+            </div>
+            <!-- 图片 2 -->
+            <div class="group overflow-hidden rounded-xl shadow-md hover:shadow-xl transition-shadow duration-300">
+                <img src="images/bk2.jpg" alt="手冲吧台" class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110">
+            </div>
+            <!-- 图片 3 -->
+            <div class="group overflow-hidden rounded-xl shadow-md hover:shadow-xl transition-shadow duration-300">
+                <img src="images/bk3.jpg" alt="窗边阅读角" class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110">
+            </div>
+            <!-- 图片 4 -->
+            <div class="group overflow-hidden rounded-xl shadow-md hover:shadow-xl transition-shadow duration-300">
+                <img src="images/bk4.jpg" alt="户外露台" class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110">
+            </div>
+            <!-- 图片 5 -->
+            <div class="group overflow-hidden rounded-xl shadow-md hover:shadow-xl transition-shadow duration-300">
+                <img src="images/bk5.jpg" alt="烘焙展示区" class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110">
+            </div>
+            <!-- 图片 6 -->
+            <div class="group overflow-hidden rounded-xl shadow-md hover:shadow-xl transition-shadow duration-300">
+                <img src="images/bk6.jpg" alt="夜间氛围" class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110">
+            </div>
+        </div>
+
+        <div class="text-center mt-10">
+            <a href="more2.html" class="inline-block border-2 border-coffee-accent text-coffee-accent hover:bg-coffee-accent hover:text-white px-6 py-2 rounded-full transition-colors">
+                查看更多环境照片
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- 菜单区域 -->
+<section id="menu" class="py-20 bg-white">
+    <div class="container mx-auto px-4">
+        <div class="text-center mb-16">
+            <h2 class="font-playfair font-bold text-[clamp(1.8rem,3vw,2.5rem)] text-coffee-dark mb-4">我们的菜单</h2>
+            <p class="text-gray-600 max-w-2xl mx-auto">精选世界各地的优质咖啡豆，精心烘焙，为您呈现丰富的咖啡风味</p>
+        </div>
+
+        <!-- 菜单分类 -->
+        <div class="flex flex-wrap justify-center mb-12 gap-4">
+            <button class="px-6 py-2 rounded-full bg-coffee-accent text-white font-medium">全部</button>
+            <button class="px-6 py-2 rounded-full bg-gray-100 hover:bg-coffee-cream/50 text-coffee-dark transition-colors font-medium">手冲咖啡</button>
+            <button class="px-6 py-2 rounded-full bg-gray-100 hover:bg-coffee-cream/50 text-coffee-dark transition-colors font-medium">意式咖啡</button>
+            <button class="px-6 py-2 rounded-full bg-gray-100 hover:bg-coffee-cream/50 text-coffee-dark transition-colors font-medium">甜点</button>
+            <button class="px-6 py-2 rounded-full bg-gray-100 hover:bg-coffee-cream/50 text-coffee-dark transition-colors font-medium">轻食</button>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- 埃塞俄比亚手冲 -->
+            <a href="detail-espresso.html" class="block group transition-transform duration-300 hover:scale-[1.02]">
+                <div class="bg-white rounded-xl overflow-hidden shadow-md border border-gray-100">
+                    <img src="images/kafe1.webp" alt="埃塞俄比亚手冲" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-bold text-gray-900">埃塞俄比亚手冲</h3>
+                            <span class="text-coffee-accent font-bold">¥42</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-4">果香浓郁，花香四溢，酸度明亮，回甘悠长</p>
+                        <button
+                                class="w-full bg-coffee-dark hover:bg-coffee-accent text-white py-2 rounded-lg transition-colors text-sm"
+                                onclick="event.stopPropagation(); addToCart('埃塞俄比亚手冲', 42);"
+                        >
+                            <i class="fa fa-plus-circle mr-2"></i>加入购物车
+                        </button>
+                    </div>
+                </div>
+            </a>
+
+            <!-- 拿铁咖啡 -->
+            <a href="detail-natie.html" class="block group transition-transform duration-300 hover:scale-[1.02]">
+                <div class="bg-white rounded-xl overflow-hidden shadow-md border border-gray-100">
+                    <img src="images/natie.jpg" alt="拿铁咖啡" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-bold text-gray-900">拿铁咖啡</h3>
+                            <span class="text-coffee-accent font-bold">¥32</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-4">丝滑奶泡搭配浓缩咖啡，口感醇厚，奶香浓郁</p>
+                        <button
+                                class="w-full bg-coffee-dark hover:bg-coffee-accent text-white py-2 rounded-lg transition-colors text-sm"
+                                onclick="event.stopPropagation(); addToCart('拿铁咖啡', 32);"
+                        >
+                            <i class="fa fa-plus-circle mr-2"></i>加入购物车
+                        </button>
+                    </div>
+                </div>
+            </a>
+
+            <!-- 焦糖玛奇朵 -->
+            <a href="detail-maqit.html" class="block group transition-transform duration-300 hover:scale-[1.02]">
+                <div class="bg-white rounded-xl overflow-hidden shadow-md border border-gray-100">
+                    <img src="images/maqit.jpg" alt="焦糖玛奇朵" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-bold text-gray-900">焦糖玛奇朵</h3>
+                            <span class="text-coffee-accent font-bold">¥38</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-4">香甜焦糖酱，丝滑牛奶，浓缩咖啡的完美融合</p>
+                        <button
+                                class="w-full bg-coffee-dark hover:bg-coffee-accent text-white py-2 rounded-lg transition-colors text-sm"
+                                onclick="event.stopPropagation(); addToCart('焦糖玛奇朵', 38);"
+                        >
+                            <i class="fa fa-plus-circle mr-2"></i>加入购物车
+                        </button>
+                    </div>
+                </div>
+            </a>
+
+            <!-- 美式咖啡 -->
+            <a href="detail-meishi.html" class="block group transition-transform duration-300 hover:scale-[1.02]">
+                <div class="bg-white rounded-xl overflow-hidden shadow-md border border-gray-100">
+                    <img src="images/meishi.jpg" alt="美式咖啡" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-bold text-gray-900">美式咖啡</h3>
+                            <span class="text-coffee-accent font-bold">¥28</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-4">纯正浓缩咖啡加水，口感清爽，回味甘甜</p>
+                        <button
+                                class="w-full bg-coffee-dark hover:bg-coffee-accent text-white py-2 rounded-lg transition-colors text-sm"
+                                onclick="event.stopPropagation(); addToCart('美式咖啡', 28);"
+                        >
+                            <i class="fa fa-plus-circle mr-2"></i>加入购物车
+                        </button>
+                    </div>
+                </div>
+            </a>
+
+            <!-- 提拉米苏 -->
+            <a href="detail-tilams.html" class="block group transition-transform duration-300 hover:scale-[1.02]">
+                <div class="bg-white rounded-xl overflow-hidden shadow-md border border-gray-100">
+                    <img src="images/tilams.jpg" alt="提拉米苏" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-bold text-gray-900">提拉米苏</h3>
+                            <span class="text-coffee-accent font-bold">¥36</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-4">经典意式甜点，咖啡酒浸泡手指饼干，马斯卡彭奶酪</p>
+                        <button
+                                class="w-full bg-coffee-dark hover:bg-coffee-accent text-white py-2 rounded-lg transition-colors text-sm"
+                                onclick="event.stopPropagation(); addToCart('提拉米苏', 36);"
+                        >
+                            <i class="fa fa-plus-circle mr-2"></i>加入购物车
+                        </button>
+                    </div>
+                </div>
+            </a>
+
+            <!-- 牛油果三明治 -->
+            <a href="detail-smz.html" class="block group transition-transform duration-300 hover:scale-[1.02]">
+                <div class="bg-white rounded-xl overflow-hidden shadow-md border border-gray-100">
+                    <img src="images/smz.jpg" alt="牛油果三明治" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-bold text-gray-900">牛油果三明治</h3>
+                            <span class="text-coffee-accent font-bold">¥35</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-4">全麦面包，新鲜牛油果，水煮蛋，芝麻菜，健康轻食</p>
+                        <button
+                                class="w-full bg-coffee-dark hover:bg-coffee-accent text-white py-2 rounded-lg transition-colors text-sm"
+                                onclick="event.stopPropagation(); addToCart('牛油果三明治', 35);"
+                        >
+                            <i class="fa fa-plus-circle mr-2"></i>加入购物车
+                        </button>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <script>
+            function addToCart(name, price) {
+                alert(`已将「${name}」（¥${price}）加入购物车`);
+            }
+        </script>
+        <!-- 查看更多按钮 -->
+        <div class="text-center mt-12">
+            <a href="menu.html" class="inline-block border-2 border-coffee-accent text-coffee-accent hover:bg-coffee-accent hover:text-white px-6 py-2 rounded-full">
+                查看完整菜单
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- 关于我们 -->
+<section id="about" class="py-20 bg-coffee-cream/20">
+    <div class="container mx-auto px-4">
+        <div class="flex flex-col lg:flex-row items-center gap-12">
+            <div class="lg:w-1/2">
+                <div class="relative">
+                    <img src="images/person3.jpg" alt="咖啡师" class="w-full rounded-xl shadow-lg">
+                    <div class="absolute -bottom-6 -right-6 bg-white p-4 rounded-lg shadow-lg hidden md:block">
+                        <div class="flex items-center space-x-2">
+                            <i class="fa fa-star text-yellow-400"></i>
+                            <i class="fa fa-star text-yellow-400"></i>
+                            <i class="fa fa-star text-yellow-400"></i>
+                            <i class="fa fa-star text-yellow-400"></i>
+                            <i class="fa fa-star text-yellow-400"></i>
+                        </div>
+                        <p class="font-medium">5.0 评分</p>
+                        <p class="text-sm text-gray-500">来自1200+顾客</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lg:w-1/2 fade-in">
+                <h2 class="font-playfair font-bold text-[clamp(1.8rem,3vw,2.5rem)] text-coffee-dark mb-6">关于 Brew Haven</h2>
+                <p class="text-gray-600 mb-4">
+                    Brew Haven 创立于2025年，是一家致力于提供高品质精品咖啡的独立咖啡馆。我们坚信，一杯好咖啡始于优质的咖啡豆，终于精湛的冲泡技艺。
+                </p>
+                <p class="text-gray-600 mb-6">
+                    我们直接从全球各地的小型咖啡农场采购咖啡豆，确保每一批豆子都经过严格筛选。所有咖啡豆均采用小批量烘焙，以保留其独特的风味特征。
+                </p>
+
+                <div class="grid grid-cols-2 gap-6 mb-8">
+                    <div class="flex items-start space-x-3">
+                        <div class="bg-coffee-accent/10 p-2 rounded-full text-coffee-accent">
+                            <i class="fa fa-coffee"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-coffee-dark mb-1">优质原料</h4>
+                            <p class="text-sm text-gray-600">精选全球顶级咖啡豆</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start space-x-3">
+                        <div class="bg-coffee-accent/10 p-2 rounded-full text-coffee-accent">
+                            <i class="fa fa-fire"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-coffee-dark mb-1">新鲜烘焙</h4>
+                            <p class="text-sm text-gray-600">每周新鲜烘焙，保证风味</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start space-x-3">
+                        <div class="bg-coffee-accent/10 p-2 rounded-full text-coffee-accent">
+                            <i class="fa fa-trophy"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-coffee-dark mb-1">专业团队</h4>
+                            <p class="text-sm text-gray-600">国际认证咖啡师团队</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start space-x-3">
+                        <div class="bg-coffee-accent/10 p-2 rounded-full text-coffee-accent">
+                            <i class="fa fa-leaf"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-coffee-dark mb-1">可持续发展</h4>
+                            <p class="text-sm text-gray-600">环保理念贯穿始终</p>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="more.html" class="inline-block bg-coffee-accent hover:bg-coffee-medium text-white px-8 py-3 rounded-full transition-colors font-medium">
+                    了解更多
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 联系我们 -->
+<section id="contact" class="py-20 bg-white">
+    <div class="container mx-auto px-4">
+        <div class="text-center mb-16">
+            <h2 class="font-playfair font-bold text-[clamp(1.8rem,3vw,2.5rem)] text-coffee-dark mb-4">联系我们</h2>
+            <p class="text-gray-600 max-w-2xl mx-auto">
+                无论您有任何问题、建议或合作意向，我们都期待听到您的声音
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            <!-- 联系信息 —— 改为横向布局 -->
+            <div class="bg-coffee-cream/10 p-6 rounded-xl">
+                <h3 class="font-playfair font-bold text-xl text-coffee-dark mb-6">联系方式</h3>
+
+                <!-- 横向 Flex 容器（响应式） -->
+                <div class="flex flex-col sm:flex-row flex-wrap gap-6 -mx-2">
+                    <!-- 地址 -->
+                    <div class="flex-1 min-w-[200px] px-2">
+                        <div class="flex items-start space-x-3">
+                            <div class="bg-coffee-accent/10 p-2.5 rounded-full text-coffee-accent mt-0.5">
+                                <i class="fa fa-map-marker"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-coffee-dark text-sm mb-1">地址</h4>
+                                <p class="text-gray-600 text-sm">云南省昆明市巡津街48号</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 电话 -->
+                    <div class="flex-1 min-w-[200px] px-2">
+                        <div class="flex items-start space-x-3">
+                            <div class="bg-coffee-accent/10 p-2.5 rounded-full text-coffee-accent mt-0.5">
+                                <i class="fa fa-phone"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-coffee-dark text-sm mb-1">电话</h4>
+                                <p class="text-gray-600 text-sm">+86 21 8888 8888</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 邮箱 -->
+                    <div class="flex-1 min-w-[200px] px-2">
+                        <div class="flex items-start space-x-3">
+                            <div class="bg-coffee-accent/10 p-2.5 rounded-full text-coffee-accent mt-0.5">
+                                <i class="fa fa-envelope"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-coffee-dark text-sm mb-1">邮箱</h4>
+                                <p class="text-gray-600 text-sm">info@brewhaven.com</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 营业时间 -->
+                    <div class="flex-1 min-w-[200px] px-2">
+                        <div class="flex items-start space-x-3">
+                            <div class="bg-coffee-accent/10 p-2.5 rounded-full text-coffee-accent mt-0.5">
+                                <i class="fa fa-clock-o"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-coffee-dark text-sm mb-1">营业时间</h4>
+                                <p class="text-gray-600 text-sm">周一至周五: 8:00 - 22:00<br>周六至周日: 9:00 - 23:00</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 表单区域（保持不变） -->
+            <div class="bg-coffee-cream/10 p-8 rounded-xl">
+                <h3 class="font-playfair font-bold text-xl text-coffee-dark mb-6">发送消息</h3>
+                <form class="space-y-4">
+                    <div>
+                        <label for="name" class="block text-sm font-medium text-coffee-dark mb-1">姓名</label>
+                        <input type="text" id="name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-coffee-accent focus:outline-none" placeholder="您的姓名" />
+                    </div>
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-coffee-dark mb-1">邮箱</label>
+                        <input type="email" id="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-coffee-accent focus:outline-none" placeholder="your@email.com" />
+                    </div>
+                    <div>
+                        <label for="message" class="block text-sm font-medium text-coffee-dark mb-1">消息</label>
+                        <textarea id="message" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-coffee-accent focus:outline-none" placeholder="请输入您的消息..."></textarea>
+                    </div>
+                    <button type="submit" class="w-full bg-coffee-dark text-white py-2.5 rounded-lg font-medium hover:bg-coffee-brown transition-colors">
+                        发送
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 社交与互动区域（替换原表单） -->
+<div class="bg-coffee-cream/10 p-8 rounded-xl">
+    <h3 class="font-playfair font-bold text-xl text-coffee-dark mb-6">关注我们</h3>
+
+    <!-- 社交媒体图标 -->
+    <div class="flex space-x-4 mb-8">
+        <a href="#" class="w-10 h-10 rounded-full bg-coffee-dark flex items-center justify-center text-white hover:bg-coffee-brown transition-colors" aria-label="微信">
+            <i class="fab fa-weixin"></i>
+        </a>
+        <a href="#" class="w-10 h-10 rounded-full bg-coffee-dark flex items-center justify-center text-white hover:bg-coffee-brown transition-colors" aria-label="微博">
+            <i class="fab fa-weibo"></i>
+        </a>
+        <a href="#" class="w-10 h-10 rounded-full bg-coffee-dark flex items-center justify-center text-white hover:bg-coffee-brown transition-colors" aria-label="Instagram">
+            <i class="fab fa-instagram"></i>
+        </a>
+        <a href="#" class="w-10 h-10 rounded-full bg-coffee-dark flex items-center justify-center text-white hover:bg-coffee-brown transition-colors" aria-label="Facebook">
+            <i class="fab fa-facebook-f"></i>
+        </a>
+    </div>
+
+    <!-- 二维码卡片 -->
+    <div class="text-center">
+        <div class="inline-block p-3 bg-white rounded-lg shadow-sm border border-coffee-cream mb-4">
+            <!-- 这里放您的微信公众号或小程序二维码图片 -->
+            <img src="images/ewm.jpg" alt="Brew Haven 微信公众号" class="w-32 h-32 object-contain">
+        </div>
+        <p class="text-gray-600 text-sm">扫码关注我们的微信公众号<br>获取新品资讯与会员福利</p>
+    </div>
+</div>
+            </div>
+        </div>
+</section>
+
+<!-- 页脚 -->
+<footer class="bg-coffee-dark text-white py-12">
+    <div class="container mx-auto px-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <!-- 品牌信息 -->
+            <div>
+                <div class="flex items-center space-x-2 mb-4">
+                    <i class="fa fa-coffee text-2xl text-coffee-light"></i>
+                    <span class="font-playfair font-bold text-xl">Brew Haven</span>
+                </div>
+                <p class="text-gray-300 mb-6">
+                    用心烘焙每一颗咖啡豆，用心制作每一杯咖啡，只为给您带来最好的咖啡体验。
+                </p>
+                <div class="flex space-x-4">
+                    <a href="#" class="text-gray-300 hover:text-coffee-light transition-colors">
+                        <i class="fa fa-weixin text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-300 hover:text-coffee-light transition-colors">
+                        <i class="fa fa-weibo text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-300 hover:text-coffee-light transition-colors">
+                        <i class="fa fa-instagram text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-300 hover:text-coffee-light transition-colors">
+                        <i class="fa fa-facebook text-xl"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 快速链接 -->
+            <div>
+                <h4 class="font-bold text-lg mb-4">快速链接</h4>
+                <ul class="space-y-2">
+                    <li><a href="#home" class="text-gray-300 hover:text-coffee-light transition-colors">首页</a></li>
+                    <li><a href="#menu" class="text-gray-300 hover:text-coffee-light transition-colors">菜单</a></li>
+                    <li><a href="#about" class="text-gray-300 hover:text-coffee-light transition-colors">关于我们</a></li>
+                    <li><a href="#contact" class="text-gray-300 hover:text-coffee-light transition-colors">联系我们</a></li>
+                    <li><a href="#" class="text-gray-300 hover:text-coffee-light transition-colors">隐私政策</a></li>
+                </ul>
+            </div>
+
+            <!-- 营业时间 -->
+            <div>
+                <h4 class="font-bold text-lg mb-4">营业时间</h4>
+                <ul class="space-y-2 text-gray-300">
+                    <li class="flex justify-between">
+                        <span>周一至周五</span>
+                        <span>8:00 - 22:00</span>
+                    </li>
+                    <li class="flex justify-between">
+                        <span>周六</span>
+                        <span>9:00 - 23:00</span>
+                    </li>
+                    <li class="flex justify-between">
+                        <span>周日</span>
+                        <span>9:00 - 23:00</span>
+                    </li>
+                    <li class="flex justify-between">
+                        <span>法定节假日</span>
+                        <span>9:00 - 22:00</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- 订阅 -->
+            <div>
+                <h4 class="font-bold text-lg mb-4">订阅我们</h4>
+                <p class="text-gray-300 mb-4">
+                    订阅我们的新闻通讯，获取最新优惠和活动信息
+                </p>
+                <form class="flex">
+                    <input type="email" placeholder="您的邮箱地址" class="px-4 py-2 rounded-l-lg w-full focus:outline-none text-coffee-dark">
+                    <button type="submit" class="bg-coffee-accent hover:bg-coffee-medium text-white px-4 py-2 rounded-r-lg transition-colors">
+                        <i class="fa fa-paper-plane"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <div class="border-t border-gray-700 mt-10 pt-6 text-center text-gray-400">
+            <p>&copy; 2024 Brew Haven. 保留所有权利。</p>
+        </div>
+    </div>
+</footer>
+
+<!-- 返回顶部按钮 -->
+<button id="backToTop" class="fixed bottom-8 right-8 bg-coffee-accent hover:bg-coffee-medium text-white p-3 rounded-full shadow-lg transition-all z-40 hidden">
+    <i class="fa fa-chevron-up"></i>
+</button>
+
+<!-- JavaScript -->
+<script>
+    // DOM元素
+    const navbar = document.getElementById('navbar');
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const loginBtn = document.getElementById('loginBtn');
+    const mobileLoginBtn = document.getElementById('mobileLoginBtn');
+    const loginModal = document.getElementById('loginModal');
+    const closeLoginModal = document.getElementById('closeLoginModal');
+    const loginForm = document.getElementById('loginForm');
+    const userMenu = document.getElementById('userMenu');
+    const userMenuBtn = document.getElementById('userMenuBtn');
+    const userDropdown = document.getElementById('userDropdown');
+    const logoutBtn = document.getElementById('logoutBtn');
+    const backToTop = document.getElementById('backToTop');
+
+    // 导航栏滚动效果
+    window.addEventListener('scroll', function() {
+        if (window.scrollY > 50) {
+            navbar.classList.add('bg-white', 'shadow-md');
+            navbar.classList.remove('bg-transparent');
+            backToTop.classList.remove('hidden');
+        } else {
+            navbar.classList.remove('bg-white', 'shadow-md');
+            navbar.classList.add('bg-transparent');
+            backToTop.classList.add('hidden');
+        }
+    });
+
+    // 移动端菜单切换
+    mobileMenuBtn.addEventListener('click', function() {
+        mobileMenu.classList.toggle('hidden');
+        const icon = mobileMenuBtn.querySelector('i');
+        if (mobileMenu.classList.contains('hidden')) {
+            icon.classList.remove('fa-times');
+            icon.classList.add('fa-bars');
+        } else {
+            icon.classList.remove('fa-bars');
+            icon.classList.add('fa-times');
+        }
+    });
+
+    // 登录模态框控制
+    function openLoginModal() {
+        loginModal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeLoginModalFunc() {
+        loginModal.classList.add('hidden');
+        document.body.style.overflow = '';
+    }
+
+    loginBtn.addEventListener('click', openLoginModal);
+    mobileLoginBtn.addEventListener('click', function() {
+        mobileMenu.classList.add('hidden');
+        const icon = mobileMenuBtn.querySelector('i');
+        icon.classList.remove('fa-times');
+        icon.classList.add('fa-bars');
+        openLoginModal();
+    });
+    closeLoginModal.addEventListener('click', closeLoginModalFunc);
+
+    // 点击模态框外部关闭
+    loginModal.addEventListener('click', function(e) {
+        if (e.target === loginModal) {
+            closeLoginModalFunc();
+        }
+    });
+
+    // 登录表单提交（对接后端Servlet）
+    loginForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+
+        // 发送请求到LoginServlet验证账号密码
+        fetch('LoginServlet', {  // 这里的路径要和Servlet的@WebServlet注解一致
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`
+        })
+            .then(response => response.text())
+            .then(data => {
+                if (data === 'success') {
+                    closeLoginModalFunc();
+                    // 登录成功，刷新页面显示用户信息
+                    window.location.reload();  // 重新加载页面，触发登录状态检查
+                } else {
+                    // 登录失败，显示错误信息（如密码错误）
+                    alert('登录失败：' + data);
+                }
+            })
+            .catch(error => {
+                alert('网络错误，请重试');
+            });
+    });
+    // 用户菜单下拉
+    userMenuBtn.addEventListener('click', function() {
+        userDropdown.classList.toggle('hidden');
+    });
+
+    // 点击外部关闭下拉菜单
+    document.addEventListener('click', function(e) {
+        if (!userMenu.contains(e.target)) {
+            userDropdown.classList.add('hidden');
+        }
+    });
+
+    // 退出登录
+    logoutBtn.addEventListener('click', function() {
+        // 显示登录按钮，隐藏用户菜单
+        loginBtn.classList.remove('hidden');
+        mobileLoginBtn.classList.remove('hidden');
+        userMenu.classList.add('hidden');
+
+        // 显示退出提示
+        alert('已成功退出登录！');
+    });
+
+    // 返回顶部
+    backToTop.addEventListener('click', function() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+
+    // 平滑滚动
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+
+            const targetId = this.getAttribute('href');
+            if (targetId === '#') return;
+
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+                // 关闭移动端菜单
+                mobileMenu.classList.add('hidden');
+                const icon = mobileMenuBtn.querySelector('i');
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+
+                // 滚动到目标位置
+                targetElement.scrollIntoView({
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+
+    // 初始化动画
+    document.addEventListener('DOMContentLoaded', function() {
+        // 初始隐藏用户菜单
+        userMenu.classList.add('hidden');
+
+        // 触发一次滚动事件以设置初始状态
+        window.dispatchEvent(new Event('scroll'));
+
+        // 新增：检查登录状态（对接CheckLoginServlet）
+        fetch('CheckLoginServlet')  // 检查登录状态的Servlet
+            .then(response => response.text())
+            .then(data => {
+                if (data !== 'not_login') {
+                    // 已登录，显示用户菜单，隐藏登录按钮
+                    loginBtn.classList.add('hidden');
+                    mobileLoginBtn.classList.add('hidden');
+                    userMenu.classList.remove('hidden');
+                    // 显示用户名（需要在HTML中给用户名元素添加id="userName"）
+                    document.getElementById('userName').textContent = data;
+                }
+            });
+    });
+</script>
+</body>
+</html>

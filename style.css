@@ -1,0 +1,156 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.product-card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+}
+
+.product-card img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+}
+
+.product-info {
+    padding: 20px;
+}
+
+.product-info h3 {
+    font-size: 1.3em;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+.description {
+    color: #666;
+    margin-bottom: 16px;
+    font-size: 0.95em;
+}
+
+.price {
+    float: right;
+    color: #7b523d;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+.add-to-cart {
+    background-color: #5c3e31;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    font-size: 1em;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 10px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.add-to-cart:hover {
+    background-color: #4a2f22;
+}
+
+/* 详情页样式 */
+.detail-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.detail-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.back-btn {
+    color: #7b523d;
+    text-decoration: none;
+    font-size: 1.1em;
+    margin-right: 10px;
+}
+
+.detail-header h1 {
+    font-size: 1.8em;
+    margin: 0;
+}
+
+.detail-image img {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.detail-content {
+    padding: 16px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.detail-content p {
+    margin-bottom: 10px;
+    font-size: 1em;
+}
+
+.detail-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.detail-footer .price {
+    font-size: 1.5em;
+    color: #7b523d;
+    font-weight: bold;
+}
+
+.detail-footer .add-to-cart {
+    background-color: #5c3e31;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    font-size: 1em;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.detail-footer .add-to-cart:hover {
+    background-color: #4a2f22;
+}
