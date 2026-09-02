@@ -1,0 +1,640 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>Brew Haven - 环境画廊</title>
+<!-- 引入Font Awesome图标，脚本用到图标 -->
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f9f5ec;
+        color: #333;
+        padding-top:80px;
+        padding-bottom:4rem;
+    }
+    ul, div, li, img {
+        transition: all 0.4s ease;
+    }
+    ul {
+        padding: 0;
+        list-style: none;
+        overflow: hidden;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    .showBox li {
+        float: left;
+        margin: 0 0 24px;
+        border: none;
+        background: #fff;
+        padding:0 12px;
+        width: 33.333%;
+        min-height: 280px;
+    }
+    .card-inner{
+        border-radius:12px;
+        overflow:hidden;
+        box-shadow: 0 3px 10px rgba(92,58,42,0.08);
+        display:flex;
+        flex-direction: row;
+    }
+    .showBox li:hover .card-inner{
+        transform: translateY(-5px);
+        box-shadow: 0 8px 18px rgba(92,58,42,0.14);
+    }
+    .imgBox {
+        width: 50%;
+        height: 260px;
+        overflow: hidden;
+    }
+    .imgBox img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 1;
+    }
+    .showBox li:hover .imgBox img {
+        transform: scale(1.08);
+    }
+    .txtBox {
+        width:50%;
+        padding:16px 14px;
+        display:flex;
+        flex-direction:column;
+        justify-content:center;
+    }
+    .txtBox p {
+        font-size: 0.9rem;
+        color: #5c3a2a;
+        line-height: 1.6;
+    }
+    .page-header{
+        max-width:920px;
+        margin:0 auto 40px;
+        text-align:center;
+        padding:0 20px;
+    }
+    .page-header h1 {
+        font-size: 2.3rem;
+        color: #5c3a2a;
+        margin-bottom:16px;
+    }
+    .page-header p{
+        font-size:1.05rem;
+        line-height:1.7;
+        color:#3a4454;
+    }
+    hr {
+        display:none;
+    }
+    /* =========导航栏样式========= */
+    #navbar{
+        position:fixed;
+        top:0;
+        left:0;
+        width:100%;
+        padding:1rem 2rem;
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        z-index:999;
+    }
+    .bg-transparent{
+        background-color:transparent;
+    }
+    .bg-white{
+        background-color:#ffffff;
+    }
+    .shadow-md{
+        box-shadow:0 2px 8px rgba(0,0,0,0.1);
+    }
+    .nav-logo{
+        font-size:1.4rem;
+        font-weight:bold;
+        color:#5c3a2a;
+        text-decoration:none;
+    }
+    .nav-links{
+        display:flex;
+        gap:2rem;
+        align-items:center;
+    }
+    .nav-links a{
+        color:#333;
+        text-decoration:none;
+    }
+    .hidden{
+        display:none !important;
+    }
+    #mobileMenuBtn{
+        border:none;
+        background:none;
+        font-size:1.5rem;
+        cursor:pointer;
+    }
+    #mobileMenu{
+        position:absolute;
+        top:100%;
+        left:0;
+        width:100%;
+        background:#fff;
+        padding:1rem 2rem;
+    }
+    #mobileMenu a{
+        display:block;
+        padding:0.8rem 0;
+        text-decoration:none;
+        color:#333;
+    }
+    .btn{
+        padding:8px 16px;
+        border-radius:6px;
+        border:none;
+        cursor:pointer;
+    }
+    /* 用户下拉菜单 */
+    #userMenu{
+        position:relative;
+    }
+    #userMenuBtn{
+        background:none;
+        border:none;
+        cursor:pointer;
+        font-size:1rem;
+    }
+    #userDropdown{
+        position:absolute;
+        top:100%;
+        right:0;
+        background:#fff;
+        box-shadow:0 3px 12px #00000022;
+        border-radius:8px;
+        padding:8px 0;
+        min-width:120px;
+    }
+    #userDropdown button{
+        width:100%;
+        border:none;
+        background:none;
+        padding:8px 16px;
+        text-align:left;
+        cursor:pointer;
+    }
+    #userDropdown button:hover{
+        background:#f3f3f3;
+    }
+    /* 登录弹窗 */
+    #loginModal{
+        position:fixed;
+        inset:0;
+        background:rgba(0,0,0,0.5);
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        z-index:1000;
+    }
+    .modal-box{
+        background:#fff;
+        padding:24px;
+        border-radius:12px;
+        width:90%;
+        max-width:420px;
+    }
+    .modal-head{
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        margin-bottom:16px;
+    }
+    #closeLoginModal{
+        border:none;
+        background:none;
+        font-size:1.4rem;
+        cursor:pointer;
+    }
+    .form-item{
+        margin-bottom:14px;
+    }
+    .form-item label{
+        display:block;
+        margin-bottom:6px;
+    }
+    .form-item input{
+        width:100%;
+        padding:10px;
+        border:1px solid #ccc;
+        border-radius:6px;
+    }
+    /* 返回顶部 */
+    #backToTop{
+        position:fixed;
+        bottom:30px;
+        right:30px;
+        width:44px;
+        height:44px;
+        border-radius:50%;
+        background:#5c3a2a;
+        color:#fff;
+        border:none;
+        cursor:pointer;
+        font-size:18px;
+        z-index:99;
+    }
+    /* 响应式 */
+    @media(max-width:992px){
+        .nav-links{
+            display:none;
+        }
+        .showBox li{
+            width:50%;
+        }
+        .card-inner{
+            flex-direction:column;
+        }
+        .imgBox,.txtBox{
+            width:100%;
+        }
+    }
+    @media(max-width:600px){
+        .showBox li{
+            width:100%;
+        }
+        .card-inner{
+            flex-direction:column;
+        }
+        .imgBox,.txtBox{
+            width:100%;
+        }
+    }
+    @media(min-width:993px){
+        #mobileMenuBtn{
+            display:none;
+        }
+        #mobileMenu{
+            display:none !important;
+        }
+    }
+</style>
+</head>
+<body>
+<!-- 导航栏 -->
+<nav id="navbar" class="bg-transparent">
+    <a href="#" class="nav-logo">Brew Haven</a>
+    <div class="nav-links">
+        <a href="#home">首页</a>
+        <a href="#environment">环境</a>
+        <a href="#menu">菜单</a>
+        <button id="loginBtn" class="btn">登录</button>
+        <div id="userMenu">
+            <button id="userMenuBtn">
+                <span id="userName"></span> <i class="fa-solid fa-chevron-down"></i>
+            </button>
+            <div id="userDropdown" class="hidden">
+                <button id="logoutBtn">退出登录</button>
+            </div>
+        </div>
+    </div>
+    <button id="mobileMenuBtn">
+        <i class="fa-solid fa-bars"></i>
+    </button>
+    <div id="mobileMenu" class="hidden">
+        <a href="#home">首页</a>
+        <a href="#environment">环境</a>
+        <a href="#menu">菜单</a>
+        <button id="mobileLoginBtn" class="btn">登录</button>
+    </div>
+</nav>
+
+<!-- 登录弹窗 -->
+<div id="loginModal" class="hidden">
+    <div class="modal-box">
+        <div class="modal-head">
+            <h3>账号登录</h3>
+            <button id="closeLoginModal"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <form id="loginForm">
+            <div class="form-item">
+                <label>邮箱</label>
+                <input type="email" id="email" required>
+            </div>
+            <div class="form-item">
+                <label>密码</label>
+                <input type="password" id="password" required>
+            </div>
+            <button type="submit" class="btn" style="width:100%;background:#5c3a2a;color:white">登录</button>
+        </form>
+    </div>
+</div>
+
+<!-- 返回顶部按钮 -->
+<button id="backToTop" class="hidden">
+    <i class="fa-solid fa-arrow-up"></i>
+</button>
+
+<!-- 画廊主体 -->
+<div class="page-header">
+    <h1>我们的理念</h1>
+    <p>在 Brew Haven，我们相信咖啡不仅是饮品，更是一种生活态度。每一杯咖啡背后，是对品质的执着、对细节的尊重，以及对人与人之间连接的珍视。</p>
+</div>
+
+<ul class="showBox">
+    <!-- 1 -->
+    <li>
+        <div class="card-inner">
+            <div class="imgBox">
+                <img src="images/bk1.jpg" alt="窗边阅读休憩区">
+            </div>
+            <div class="txtBox">
+                <p>大面积落地窗搭配藏书角落，暖阳缓缓洒落，享受独处阅读的惬意咖啡时光。</p>
+            </div>
+        </div>
+    </li>
+    <!-- 2 -->
+    <li>
+        <div class="card-inner">
+            <div class="imgBox">
+                <img src="images/bk2.jpg" alt="复古休闲卡座">
+            </div>
+            <div class="txtBox">
+                <p>复古桌椅搭配柔和暗光，松弛氛围感十足，适合好友闲谈小聚。</p>
+            </div>
+        </div>
+    </li>
+    <!-- 3 -->
+    <li>
+        <div class="card-inner">
+            <div class="imgBox">
+                <img src="images/bk3.jpg" alt="山石绿植座位区">
+            </div>
+            <div class="txtBox">
+                <p>山石绿植造景环绕座位，将自然搬进店内，伴着草木气息品味咖啡。</p>
+            </div>
+        </div>
+    </li>
+    <!-- 4 -->
+    <li>
+        <div class="card-inner">
+            <div class="imgBox">
+                <img src="images/bk4.jpg" alt="原石咖啡吧台">
+            </div>
+            <div class="txtBox">
+                <p>粗犷原石台面搭配专业设备，近距离感受咖啡制作，沉浸满屋咖啡香气。</p>
+            </div>
+        </div>
+    </li>
+    <!-- 5 -->
+    <li>
+        <div class="card-inner">
+            <div class="imgBox">
+                <img src="images/bk5.jpg" alt="原木暖光休憩区">
+            </div>
+            <div class="txtBox">
+                <p>原生态原木墙面搭配暖调灯光，暮色降临，获得一份安静治愈。</p>
+            </div>
+        </div>
+    </li>
+    <!-- 6 -->
+    <li>
+        <div class="card-inner">
+            <div class="imgBox">
+                <img src="images/bk6.jpg" alt="室内巨树景观">
+            </div>
+            <div class="txtBox">
+                <p>巨型古树作为空间核心，原木结构层次丰富，沉浸式自然咖啡馆体验。</p>
+            </div>
+        </div>
+    </li>
+    <!-- 7 -->
+    <li>
+        <div class="card-inner">
+            <div class="imgBox">
+                <img src="images/bk7.jpg" alt="绿植环绕区">
+            </div>
+            <div class="txtBox">
+                <p>室内绿意盎然，植物错落布置，置身其中感受自然清新，舒缓身心。</p>
+            </div>
+        </div>
+    </li>
+    <!-- 8 -->
+    <li>
+        <div class="card-inner">
+            <div class="imgBox">
+                <img src="images/bk8.jpg" alt="木质长桌区">
+            </div>
+            <div class="txtBox">
+                <p>温润原木长桌，空间开阔舒展，不管是工作办公还是多人聚会都很合适。</p>
+            </div>
+        </div>
+    </li>
+    <!-- 9 -->
+    <li>
+        <div class="card-inner">
+            <div class="imgBox">
+                <img src="images/bk9.jpg" alt="艺术墙面">
+            </div>
+            <div class="txtBox">
+                <p>艺术肌理墙面搭配柔和灯光，艺术氛围浓厚，咖啡与美学在此交融。</p>
+            </div>
+        </div>
+    </li>
+    <!-- 10 -->
+    <li>
+        <div class="card-inner">
+            <div class="imgBox">
+                <img src="images/bk10.jpg" alt="私密卡座">
+            </div>
+            <div class="txtBox">
+                <p>半封闭私密卡座，隔绝外界嘈杂，适合深度交谈或是独自放空发呆。</p>
+            </div>
+        </div>
+    </li>
+    <!-- 11 -->
+    <li>
+        <div class="card-inner">
+            <div class="imgBox">
+                <img src="images/bk11.jpg" alt="咖啡豆展示架">
+            </div>
+            <div class="txtBox">
+                <p>陈列世界各地精品咖啡豆，直观看见豆子原貌，感受咖啡产地的魅力。</p>
+            </div>
+        </div>
+    </li>
+    <!-- 12 -->
+    <li>
+        <div class="card-inner">
+            <div class="imgBox">
+                <img src="images/bk12.jpg" alt="晨光角落">
+            </div>
+            <div class="txtBox">
+                <p>清晨阳光洒入空间，温暖柔和，一杯咖啡开启惬意美好的一天。</p>
+            </div>
+        </div>
+    </li>
+</ul>
+
+<script>
+    // DOM元素
+    const navbar = document.getElementById('navbar');
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const loginBtn = document.getElementById('loginBtn');
+    const mobileLoginBtn = document.getElementById('mobileLoginBtn');
+    const loginModal = document.getElementById('loginModal');
+    const closeLoginModal = document.getElementById('closeLoginModal');
+    const loginForm = document.getElementById('loginForm');
+    const userMenu = document.getElementById('userMenu');
+    const userMenuBtn = document.getElementById('userMenuBtn');
+    const userDropdown = document.getElementById('userDropdown');
+    const logoutBtn = document.getElementById('logoutBtn');
+    const backToTop = document.getElementById('backToTop');
+    // 导航栏滚动效果
+    window.addEventListener('scroll', function() {
+        if (window.scrollY > 50) {
+            navbar.classList.add('bg-white', 'shadow-md');
+            navbar.classList.remove('bg-transparent');
+            backToTop.classList.remove('hidden');
+        } else {
+            navbar.classList.remove('bg-white', 'shadow-md');
+            navbar.classList.add('bg-transparent');
+            backToTop.classList.add('hidden');
+        }
+    });
+    // 移动端菜单切换
+    mobileMenuBtn.addEventListener('click', function() {
+        mobileMenu.classList.toggle('hidden');
+        const icon = mobileMenuBtn.querySelector('i');
+        if (mobileMenu.classList.contains('hidden')) {
+            icon.classList.remove('fa-times');
+            icon.classList.add('fa-bars');
+        } else {
+            icon.classList.remove('fa-bars');
+            icon.classList.add('fa-times');
+        }
+    });
+    // 登录模态框控制
+    function openLoginModal() {
+        loginModal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+    }
+    function closeLoginModalFunc() {
+        loginModal.classList.add('hidden');
+        document.body.style.overflow = '';
+    }
+    loginBtn.addEventListener('click', openLoginModal);
+    mobileLoginBtn.addEventListener('click', function() {
+        mobileMenu.classList.add('hidden');
+        const icon = mobileMenuBtn.querySelector('i');
+        icon.classList.remove('fa-times');
+        icon.classList.add('fa-bars');
+        openLoginModal();
+    });
+    closeLoginModal.addEventListener('click', closeLoginModalFunc);
+    // 点击模态框外部关闭
+    loginModal.addEventListener('click', function(e) {
+        if (e.target === loginModal) {
+            closeLoginModalFunc();
+        }
+    });
+    // 登录表单提交（对接后端Servlet）
+    loginForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        // 发送请求到LoginServlet验证账号密码
+        fetch('LoginServlet', {  // 这里的路径要和Servlet的@WebServlet注解一致
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`
+        })
+            .then(response => response.text())
+            .then(data => {
+                if (data === 'success') {
+                    closeLoginModalFunc();
+                    // 登录成功，刷新页面显示用户信息
+                    window.location.reload();  // 重新加载页面，触发登录状态检查
+                } else {
+                    // 登录失败，显示错误信息（如密码错误）
+                    alert('登录失败：' + data);
+                }
+            })
+            .catch(error => {
+                alert('网络错误，请重试');
+            });
+    });
+    // 用户菜单下拉
+    userMenuBtn.addEventListener('click', function() {
+        userDropdown.classList.toggle('hidden');
+    });
+    // 点击外部关闭下拉菜单
+    document.addEventListener('click', function(e) {
+        if (!userMenu.contains(e.target)) {
+            userDropdown.classList.add('hidden');
+        }
+    });
+    // 退出登录
+    logoutBtn.addEventListener('click', function() {
+        // 显示登录按钮，隐藏用户菜单
+        loginBtn.classList.remove('hidden');
+        mobileLoginBtn.classList.remove('hidden');
+        userMenu.classList.add('hidden');
+        // 显示退出提示
+        alert('已成功退出登录！');
+    });
+    // 返回顶部
+    backToTop.addEventListener('click', function() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+    // 平滑滚动
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            if (targetId === '#') return;
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+                // 关闭移动端菜单
+                mobileMenu.classList.add('hidden');
+                const icon = mobileMenuBtn.querySelector('i');
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+                // 滚动到目标位置
+                targetElement.scrollIntoView({
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+    // 初始化动画
+    document.addEventListener('DOMContentLoaded', function() {
+        // 初始隐藏用户菜单
+        userMenu.classList.add('hidden');
+        // 触发一次滚动事件以设置初始状态
+        window.dispatchEvent(new Event('scroll'));
+        // 新增：检查登录状态（对接CheckLoginServlet）
+        fetch('CheckLoginServlet')  // 检查登录状态的Servlet
+            .then(response => response.text())
+            .then(data => {
+                if (data !== 'not_login') {
+                    // 已登录，显示用户菜单，隐藏登录按钮
+                    loginBtn.classList.add('hidden');
+                    mobileLoginBtn.classList.add('hidden');
+                    userMenu.classList.remove('hidden');
+                    // 显示用户名（需要在HTML中给用户名元素添加id="userName"）
+                    document.getElementById('userName').textContent = data;
+                }
+            });
+    });
+</script>
+</body>
+</html>
